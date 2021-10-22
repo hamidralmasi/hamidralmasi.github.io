@@ -70,11 +70,11 @@
     
     <item>
       <title>Seiðr: Dataplane Assisted Flow Classification Using ML</title>
-      <link>https://hamidralmasi.github.io/publication/seidr/</link>
-      <category>Publication</category>
+      <link>https://hamidralmasi.github.io/publications/seidr/</link>
+      <category>Publications</category>
       <pubDate>Mon, 17 Aug 2020 11:36:45 +0100</pubDate>
       
-      <guid>https://hamidralmasi.github.io/publication/seidr/</guid>
+      <guid>https://hamidralmasi.github.io/publications/seidr/</guid>
       <description></description>
     </item>
     
@@ -108,11 +108,11 @@ Due to this, I&amp;rsquo;ve designed a thread-safe shared stream buffer intended
     
     <item>
       <title>Per-Host DDoS Mitigation by Direct-Control Reinforcement Learning</title>
-      <link>https://hamidralmasi.github.io/publication/dc-rl-ddos/</link>
-      <category>Publication</category>
+      <link>https://hamidralmasi.github.io/publications/dc-rl-ddos/</link>
+      <category>Publications</category>
       <pubDate>Sun, 01 Mar 2020 15:58:29 +0000</pubDate>
       
-      <guid>https://hamidralmasi.github.io/publication/dc-rl-ddos/</guid>
+      <guid>https://hamidralmasi.github.io/publications/dc-rl-ddos/</guid>
       <description></description>
     </item>
     
@@ -204,11 +204,11 @@ their own modifications. A full repository is included &lt;a href=&#34;https://g
     
     <item>
       <title>On Maximum Weight Clique Algorithms, and How They Are Evaluated</title>
-      <link>https://hamidralmasi.github.io/publication/eval-mwclq/</link>
-      <category>Publication</category>
+      <link>https://hamidralmasi.github.io/publications/eval-mwclq/</link>
+      <category>Publications</category>
       <pubDate>Fri, 21 Jul 2017 16:39:22 +0100</pubDate>
       
-      <guid>https://hamidralmasi.github.io/publication/eval-mwclq/</guid>
+      <guid>https://hamidralmasi.github.io/publications/eval-mwclq/</guid>
       <description></description>
     </item>
     
