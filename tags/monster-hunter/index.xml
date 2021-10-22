@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Monster Hunter on Kyle Simpson</title>
-    <link>https://mcfelix.me/tags/monster-hunter/</link>
+    <link>https://hamidralmasi.github.io/tags/monster-hunter/</link>
     <description>Recent content in Monster Hunter on Kyle Simpson</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-GB</language>
-    <lastBuildDate>Tue, 27 Feb 2018 22:41:21 +0000</lastBuildDate><atom:link href="https://mcfelix.me/tags/monster-hunter/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 27 Feb 2018 22:41:21 +0000</lastBuildDate><atom:link href="https://hamidralmasi.github.io/tags/monster-hunter/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Felyne Bot, and Initial Thoughts on Rust</title>
-      <link>https://mcfelix.me/blog/rust-init-thoughts/</link>
+      <link>https://hamidralmasi.github.io/blog/rust-init-thoughts/</link>
       <pubDate>Tue, 27 Feb 2018 22:41:21 +0000</pubDate>
       
-      <guid>https://mcfelix.me/blog/rust-init-thoughts/</guid>
+      <guid>https://hamidralmasi.github.io/blog/rust-init-thoughts/</guid>
       <description>&lt;p&gt;Having been bereft of a way to annoy my fellow Discord users (and itching to learn a new language), I&amp;rsquo;ve found myself experimenting with &lt;a href=&#34;https://www.rust-lang.org&#34;&gt;Rust&lt;/a&gt;.
 It&amp;rsquo;s been fun and tiring writing &lt;a href=&#34;https://github.com/FelixMcFelix/felyne-bot&#34;&gt;Felyne bot&lt;/a&gt; in a new language, and I&amp;rsquo;ve gotten some more language experience by helping develop &lt;a href=&#34;https://github.com/zeyla/serenity&#34;&gt;Serenity&lt;/a&gt;.&lt;/p&gt;</description>
     </item>

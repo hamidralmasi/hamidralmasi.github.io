@@ -5,9 +5,9 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 		
-		<link rel="shortcut icon" href="https://mcfelix.me/images/fav/favicon.ico" />
-		<link rel="icon" sizes="64x64 32x32 24x24 16x16" href="https://mcfelix.me/images/fav/favicon.ico">
-		<link rel="apple-touch-icon-precomposed" href="https://mcfelix.me/images/fav/favicon-152.png">
+		<link rel="shortcut icon" href="https://hamidralmasi.github.io/images/fav/favicon.ico" />
+		<link rel="icon" sizes="64x64 32x32 24x24 16x16" href="https://hamidralmasi.github.io/images/fav/favicon.ico">
+		<link rel="apple-touch-icon-precomposed" href="https://hamidralmasi.github.io/images/fav/favicon-152.png">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="generator" content="Hugo 0.88.1" />
@@ -44,9 +44,9 @@
 		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 
 		
-		<link rel="stylesheet" href="https://mcfelix.me/css/base-min.css" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://mcfelix.me/css/grids-min.css" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://mcfelix.me/css/grids-responsive-min.css" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://hamidralmasi.github.io/css/base-min.css" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://hamidralmasi.github.io/css/grids-min.css" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://hamidralmasi.github.io/css/grids-responsive-min.css" crossorigin="anonymous">
 
 		<style type="text/css">
 			html {
@@ -70,11 +70,11 @@
 
 		
 
-		<link rel="stylesheet" href="https://mcfelix.me/css/styles.css">
-		<link rel="stylesheet" href="https://mcfelix.me/css/small.css" media="(min-width: 23em)">
-		<link rel="stylesheet" href="https://mcfelix.me/css/medium.css" media="(min-width: 48em)">
-		<link rel="stylesheet" href="https://mcfelix.me/css/large.css" media="(min-width: 64em)">
-		<link rel="stylesheet" href="https://mcfelix.me/css/custom.css">
+		<link rel="stylesheet" href="https://hamidralmasi.github.io/css/styles.css">
+		<link rel="stylesheet" href="https://hamidralmasi.github.io/css/small.css" media="(min-width: 23em)">
+		<link rel="stylesheet" href="https://hamidralmasi.github.io/css/medium.css" media="(min-width: 48em)">
+		<link rel="stylesheet" href="https://hamidralmasi.github.io/css/large.css" media="(min-width: 64em)">
+		<link rel="stylesheet" href="https://hamidralmasi.github.io/css/custom.css">
 
 		
 		<title>Felyne Bot, and Initial Thoughts on Rust - Kyle Simpson</title>
@@ -82,11 +82,11 @@
 		<meta property="og:type" content="article">
 		
 
-		<meta property="og:url" content="https://mcfelix.me/blog/rust-init-thoughts/">
+		<meta property="og:url" content="https://hamidralmasi.github.io/blog/rust-init-thoughts/">
 		<meta name="description" content="Portfolio and personal blog site of Kyle A. Simpson.">
 		
 		
-		<meta property="og:image" content="https://mcfelix.me//blog/rust-init-thoughts/images/felynes_hu40b5ae5edd8c4ccfec8d44bc4e47fec3_960473_200x0_resize_q100_box_3.png">
+		<meta property="og:image" content="https://hamidralmasi.github.io//blog/rust-init-thoughts/images/felynes_hu40b5ae5edd8c4ccfec8d44bc4e47fec3_960473_200x0_resize_q100_box_3.png">
 		
 		<meta name="author" content="Kyle A. Simpson" />
 
@@ -108,7 +108,7 @@
 		"@type": "BlogPosting",
 		"mainEntityOfPage":{
 			"@type":"WebPage",
-			"@id":"https:\/\/mcfelix.me\/"
+			"@id":"https:\/\/hamidralmasi.github.io\/"
 		},
 		"headline": "Felyne Bot, and Initial Thoughts on Rust |  ",
 
@@ -118,7 +118,7 @@
 			
 			{
 				"@type": "ImageObject",
-				"url": "https:\/\/mcfelix.me\/blog\/rust-init-thoughts\/images\/felynes.png",
+				"url": "https:\/\/hamidralmasi.github.io\/blog\/rust-init-thoughts\/images\/felynes.png",
 				"height": 700,
 				"width": 700,
 				"caption": "Some felynes from Monster Hunter Portable 3rd."
@@ -132,14 +132,14 @@
 		"author": {
 			"@type": "Person",
 			"name": "Kyle A. Simpson",
-			"image": "https:\/\/mcfelix.me\/images/profile.jpg"
+			"image": "https:\/\/hamidralmasi.github.io\/images/profile.jpg"
 		},
 		"publisher": {
 			"@type": "Organization",
 			"name": "",
 			"logo": {
 				"@type": "ImageObject",
-				"url": "https:\/\/mcfelix.me\/images/logo.png",
+				"url": "https:\/\/hamidralmasi.github.io\/images/logo.png",
 				"height": 60,
 				"width": 60
 			}
@@ -155,14 +155,14 @@
 	}
 </script>
 
-<link rel="bookmark" href="https://mcfelix.me/blog/rust-init-thoughts/" />
+<link rel="bookmark" href="https://hamidralmasi.github.io/blog/rust-init-thoughts/" />
 
 </head>
 <body class="pure-g">
 
 <nav class="navbar pure-u-1 pure-u-md-1-4">
 	<div class="navbar-header">
-		<a href="https://mcfelix.me/">Kyle Simpson</a>
+		<a href="https://hamidralmasi.github.io/">Kyle Simpson</a>
 	</div>
 
 	<div class="navbar-split"></div>
@@ -172,13 +172,13 @@
 		<div class="navbar-body-buffer pure-g">
 		
 			
-			<div class="pure-u-1-3 pure-u-md-1"><a href="https://mcfelix.me/blog/" >blog</a></div>
+			<div class="pure-u-1-3 pure-u-md-1"><a href="https://hamidralmasi.github.io/blog/" >blog</a></div>
 			
-			<div class="pure-u-1-3 pure-u-md-1"><a href="https://mcfelix.me/project/" >projects</a></div>
+			<div class="pure-u-1-3 pure-u-md-1"><a href="https://hamidralmasi.github.io/project/" >projects</a></div>
 			
-			<div class="pure-u-1-3 pure-u-md-1"><a href="https://mcfelix.me/kyle-simpson.pdf" target="_blank">résumé</a></div>
+			<div class="pure-u-1-3 pure-u-md-1"><a href="https://hamidralmasi.github.io/kyle-simpson.pdf" target="_blank">résumé</a></div>
 			
-			<div class="pure-u-1-3 pure-u-md-1"><a href="https://mcfelix.me/publication/" >publications</a></div>
+			<div class="pure-u-1-3 pure-u-md-1"><a href="https://hamidralmasi.github.io/publication/" >publications</a></div>
 			
 		
 		</div>
@@ -236,24 +236,24 @@
 <aside class="tag-holder">
 	<i>Tags:
 	
-		<a class="tag" href="https://mcfelix.me/tags/rust/">Rust</a>
+		<a class="tag" href="https://hamidralmasi.github.io/tags/rust/">Rust</a>
 	
-		<a class="tag" href="https://mcfelix.me/tags/discord/">Discord</a>
+		<a class="tag" href="https://hamidralmasi.github.io/tags/discord/">Discord</a>
 	
-		<a class="tag" href="https://mcfelix.me/tags/monster-hunter/">Monster Hunter</a>
+		<a class="tag" href="https://hamidralmasi.github.io/tags/monster-hunter/">Monster Hunter</a>
 	
-		<a class="tag" href="https://mcfelix.me/tags/bots/">Bots</a>
+		<a class="tag" href="https://hamidralmasi.github.io/tags/bots/">Bots</a>
 	
 	</i>
 </aside>
 
 		<aside class="category-holder">
 	
-		<div class="categorywrap"><a class="category" href="https://mcfelix.me/categories/development/">Development</a></div>
+		<div class="categorywrap"><a class="category" href="https://hamidralmasi.github.io/categories/development/">Development</a></div>
 	
-		<div class="categorywrap"><a class="category" href="https://mcfelix.me/categories/programming-languages/">Programming Languages</a></div>
+		<div class="categorywrap"><a class="category" href="https://hamidralmasi.github.io/categories/programming-languages/">Programming Languages</a></div>
 	
-		<div class="categorywrap"><a class="category" href="https://mcfelix.me/categories/gaming/">Gaming</a></div>
+		<div class="categorywrap"><a class="category" href="https://hamidralmasi.github.io/categories/gaming/">Gaming</a></div>
 	
 </aside>
 		<div class="post-split"></div>
@@ -356,28 +356,28 @@ Whether the difficulty it offsets the cost of hunting down the type of bugs that
 	<section>
 		<div class="social share">
 			<a
-				href="https://mcfelix.me/blog/rust-init-thoughts/" 
+				href="https://hamidralmasi.github.io/blog/rust-init-thoughts/" 
 				onclick="window.open(this.href, '_blank'); return false;"
 				alt="Permalink"
 				title="Permalink"
 			><i class="fas fa-link"></i></a>
 
 			<a
-				href="http://www.facebook.com/sharer.php?src=bm&u=https%3a%2f%2fmcfelix.me%2fblog%2frust-init-thoughts%2f&t=Felyne%20Bot%2c%20and%20Initial%20Thoughts%20on%20Rust"
+				href="http://www.facebook.com/sharer.php?src=bm&u=https%3a%2f%2fhamidralmasi.github.io%2fblog%2frust-init-thoughts%2f&t=Felyne%20Bot%2c%20and%20Initial%20Thoughts%20on%20Rust"
 				onclick="return newSmallWindow(this.href);"
 				alt="Share on Facebook"
 				title="Share on Facebook"
 			><i class="fab fa-facebook"></i></a>
 
 			<a
-				href="http://twitter.com/intent/tweet?url=https%3a%2f%2fmcfelix.me%2fblog%2frust-init-thoughts%2f&text=Felyne%20Bot%2c%20and%20Initial%20Thoughts%20on%20Rust&tw_p=tweetbutton"
+				href="http://twitter.com/intent/tweet?url=https%3a%2f%2fhamidralmasi.github.io%2fblog%2frust-init-thoughts%2f&text=Felyne%20Bot%2c%20and%20Initial%20Thoughts%20on%20Rust&tw_p=tweetbutton"
 				onclick="return newSmallWindow(this.href);"
 				alt="Share on Twitter"
 				title="Share on Twitter"
 			><i class="fab fa-twitter"></i></a>
 
 			<a
-				href="http://getpocket.com/edit?url=https%3a%2f%2fmcfelix.me%2fblog%2frust-init-thoughts%2f&title=Felyne%20Bot%2c%20and%20Initial%20Thoughts%20on%20Rust"
+				href="http://getpocket.com/edit?url=https%3a%2f%2fhamidralmasi.github.io%2fblog%2frust-init-thoughts%2f&title=Felyne%20Bot%2c%20and%20Initial%20Thoughts%20on%20Rust"
 				onclick="return newSmallWindow(this.href);"
 				alt="Save to Pocket"
 				title="Save to Pocket"
