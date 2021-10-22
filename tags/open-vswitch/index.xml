@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Open vSwitch on Kyle Simpson</title>
+    <link>https://hamidralmasi.github.io/tags/open-vswitch/</link>
+    <description>Recent content in Open vSwitch on Kyle Simpson</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Mon, 04 Dec 2017 15:36:00 +0000</lastBuildDate><atom:link href="https://hamidralmasi.github.io/tags/open-vswitch/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Custom Open vSwitch Actions</title>
+      <link>https://hamidralmasi.github.io/blog/modifying-ovs/</link>
+      <pubDate>Mon, 04 Dec 2017 15:36:00 +0000</pubDate>
+      
+      <guid>https://hamidralmasi.github.io/blog/modifying-ovs/</guid>
+      <description>&lt;p&gt;For a project I&amp;rsquo;ve been working on (reimplementing some &lt;a href=&#34;https://doi.org/10.1016/j.engappai.2015.01.013&#34;&gt;past work&lt;/a&gt;), being able to easily enable
+pushback at various points in the network is fairly important.
+For this, I wanted to try something I&amp;rsquo;d both learn from and be able to use as a
+springboard for later development and testing &amp;ndash; &lt;a href=&#34;http://mininet.org/&#34;&gt;mininet&lt;/a&gt;
+(and by extension, &lt;a href=&#34;http://openvswitch.org&#34;&gt;Open vSwitch&lt;/a&gt;) seemed like a good
+fit. Part of this requires a new feature to be hacked on top of OpenFlow:
+&lt;strong&gt;probabilistic packet dropping&lt;/strong&gt;. I&amp;rsquo;ve written this short
+walkthrough/tutorial on the process for the benefit of anyone looking to make
+their own modifications. A full repository is included &lt;a href=&#34;https://github.com/FelixMcFelix/ovs/tree/ppd&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;[EDIT 2019-03-27]:&lt;/strong&gt; &lt;em&gt;Updated for &lt;a href=&#34;https://github.com/openvswitch/ovs/commit/8e738337a2c25c3d6ede2829d6ffd9af6bcd36a5&#34;&gt;OVS revision 8e73833&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
