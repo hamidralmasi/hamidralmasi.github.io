@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		
+		<link rel="shortcut icon" href="https://mcfelix.me/images/fav/favicon.ico" />
+		<link rel="icon" sizes="64x64 32x32 24x24 16x16" href="https://mcfelix.me/images/fav/favicon.ico">
+		<link rel="apple-touch-icon-precomposed" href="https://mcfelix.me/images/fav/favicon-152.png">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="generator" content="Hugo 0.88.1" />
+
+		
+		
+		
+
+		
+		<link rel="preconnect"
+			href="https://fonts.gstatic.com"
+			crossorigin />
+		<link rel="preconnect"
+			href="https://use.fontawesome.com"
+			crossorigin />
+
+		
+		<link rel="preload"
+			as="style"
+			href="https://fonts.googleapis.com/css?family=Alegreya:400,400i,700,700i&display=swap" />
+
+		
+		<link rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Alegreya:400,400i,700,700i&display=swap"
+			media="print" onload="this.media='all'" />
+
+		
+		<noscript>
+			<link rel="stylesheet"
+				href="https://fonts.googleapis.com/css?family=Alegreya:400,400i,700,700i&display=swap" />
+		</noscript>
+
+		
+		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+		
+		<link rel="stylesheet" href="https://mcfelix.me/css/base-min.css" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://mcfelix.me/css/grids-min.css" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://mcfelix.me/css/grids-responsive-min.css" crossorigin="anonymous">
+
+		<style type="text/css">
+			html {
+				line-height: 1.35;
+			}
+
+			html, button, input, select, textarea, .pure-g [class *= "pure-u"] {
+				font-family: "Alegreya", "Lora", Georgia, Times, "Times New Roman", serif;
+			}
+
+			@font-face {
+				font-family: "Georgia";
+				font-display: fallback;
+				src: local(Georgia);
+			}
+		</style>
+
+		
+
+		
+
+		
+
+		<link rel="stylesheet" href="https://mcfelix.me/css/styles.css">
+		<link rel="stylesheet" href="https://mcfelix.me/css/small.css" media="(min-width: 23em)">
+		<link rel="stylesheet" href="https://mcfelix.me/css/medium.css" media="(min-width: 48em)">
+		<link rel="stylesheet" href="https://mcfelix.me/css/large.css" media="(min-width: 64em)">
+		<link rel="stylesheet" href="https://mcfelix.me/css/custom.css">
+
+		
+		<title>Custom Open vSwitch Actions - Kyle Simpson</title>
+		<meta property='og:title' content="Custom Open vSwitch Actions - Kyle Simpson">
+		<meta property="og:type" content="article">
+		
+
+		<meta property="og:url" content="https://mcfelix.me/blog/modifying-ovs/">
+		<meta name="description" content="Portfolio and personal blog site of Kyle A. Simpson.">
+		
+		<meta name="author" content="Kyle A. Simpson" />
+
+		
+
+
+
+
+
+
+<script type="application/ld+json">
+	{
+		"@context": "http://schema.org",
+		"@type": "BlogPosting",
+		"mainEntityOfPage":{
+			"@type":"WebPage",
+			"@id":"https:\/\/mcfelix.me\/"
+		},
+		"headline": "Custom Open vSwitch Actions |  ",
+
+		
+
+		"datePublished": "2017-12-04T15:36:00JST",
+		"dateModified": "2017-12-04T15:36:00JST",
+		"author": {
+			"@type": "Person",
+			"name": "Kyle A. Simpson",
+			"image": "https:\/\/mcfelix.me\/images/profile.jpg"
+		},
+		"publisher": {
+			"@type": "Organization",
+			"name": "",
+			"logo": {
+				"@type": "ImageObject",
+				"url": "https:\/\/mcfelix.me\/images/logo.png",
+				"height": 60,
+				"width": 60
+			}
+		},
+		"description": "A short tutorial on extending Open vSwitch."
+	}
+</script>
+
+<script type="text/javascript">
+	function newSmallWindow(url) {
+		window.open(url, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes');
+		return false;
+	}
+</script>
+
+<link rel="bookmark" href="https://mcfelix.me/blog/modifying-ovs/" />
+
+</head>
+<body class="pure-g">
+
+<nav class="navbar pure-u-1 pure-u-md-1-4">
+	<div class="navbar-header">
+		<a href="https://mcfelix.me/">Kyle Simpson</a>
+	</div>
+
+	<div class="navbar-split"></div>
+
+	
+	<div class="navbar-body">
+		<div class="navbar-body-buffer pure-g">
+		
+			
+			<div class="pure-u-1-3 pure-u-md-1"><a href="https://mcfelix.me/blog/" >blog</a></div>
+			
+			<div class="pure-u-1-3 pure-u-md-1"><a href="https://mcfelix.me/project/" >projects</a></div>
+			
+			<div class="pure-u-1-3 pure-u-md-1"><a href="https://mcfelix.me/kyle-simpson.pdf" target="_blank">résumé</a></div>
+			
+			<div class="pure-u-1-3 pure-u-md-1"><a href="https://mcfelix.me/publication/" >publications</a></div>
+			
+		
+		</div>
+	</div>
+
+	<div class="navbar-split"></div>
+
+	<section class="social">
+	
+
+	
+	<a href="http://github.com/FelixMcFelix" alt="GitHub" title="GitHub"><i class="fab fa-github"></i></a>
+	
+
+	
+	<a href="mailto:kyleandrew.simpson@gmail.com" alt="Email" title="Email"><i class="fas fa-envelope"></i></a>
+	
+
+	
+	<a href="http://twitter.com/McFelixFelix" alt="Twitter" title="Twitter"><i class="fab fa-twitter"></i></a>
+	
+
+	
+	<a href="http://linkedin.com/in/kyle-simpson-b0944bb0" alt="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+	
+
+	
+
+	
+	<a href="https://keybase.io/felixmcfelix" alt="Keybase" title="Keybase"><i class="fas fa-key"></i></a>
+	
+</section>
+
+</nav>
+<div class="content pure-u-1 pure-u-md-3-4">
+	<div>
+
+<article class="single">
+	<a href="/images/default.jpg" ><img class="pure-img" style="width: 100%" src="/images/default.jpg" alt=""></img></a>
+
+	<div class="body">
+		<h1>Custom Open vSwitch Actions</h1>
+		<h4 class="desc">A short tutorial on extending Open vSwitch.</h4>
+		<h3 class="date">
+	<time datetime="2017-12-04T15:36:00JST">
+		Mon, Dec 4, 2017
+	</time>
+</h3>
+		
+<aside class="reading-time">
+	<i>Reading time: ~13 minutes.</i>
+</aside>
+
+		
+<aside class="tag-holder">
+	<i>Tags:
+	
+		<a class="tag" href="https://mcfelix.me/tags/c/">C</a>
+	
+		<a class="tag" href="https://mcfelix.me/tags/open-vswitch/">Open vSwitch</a>
+	
+		<a class="tag" href="https://mcfelix.me/tags/sdn/">SDN</a>
+	
+	</i>
+</aside>
+
+		<aside class="category-holder">
+	
+		<div class="categorywrap"><a class="category" href="https://mcfelix.me/categories/development/">Development</a></div>
+	
+		<div class="categorywrap"><a class="category" href="https://mcfelix.me/categories/tutorial/">Tutorial</a></div>
+	
+		<div class="categorywrap"><a class="category" href="https://mcfelix.me/categories/networks/">Networks</a></div>
+	
+</aside>
+		<div class="post-split"></div>
+		<p>For a project I&rsquo;ve been working on (reimplementing some <a href="https://doi.org/10.1016/j.engappai.2015.01.013">past work</a>), being able to easily enable
+pushback at various points in the network is fairly important.
+For this, I wanted to try something I&rsquo;d both learn from and be able to use as a
+springboard for later development and testing &ndash; <a href="http://mininet.org/">mininet</a>
+(and by extension, <a href="http://openvswitch.org">Open vSwitch</a>) seemed like a good
+fit. Part of this requires a new feature to be hacked on top of OpenFlow:
+<strong>probabilistic packet dropping</strong>. I&rsquo;ve written this short
+walkthrough/tutorial on the process for the benefit of anyone looking to make
+their own modifications. A full repository is included <a href="https://github.com/FelixMcFelix/ovs/tree/ppd">here</a>.</p>
+<p><strong>[EDIT 2019-03-27]:</strong> <em>Updated for <a href="https://github.com/openvswitch/ovs/commit/8e738337a2c25c3d6ede2829d6ffd9af6bcd36a5">OVS revision 8e73833</a>.</em></p>
+<p>Mininet relies on virtual ethernet links and network namespaces to allow
+simulated communication between switches and nodes: switches use Open vSwitch
+(OVS) and are configured with the OpenFlow protocol. As-is, the OpenFlow
+protocol offers <em>meters</em> which are capable of rate-limiting traffic, but Open
+vSwitch doesn&rsquo;t support these in its kernel datapath. To do what I need, I <em>have
+to</em> modify OVS (which is a little less than ideal)!</p>
+<p>Thankfully, other kind folks have attempted and documented their process
+(sort-of). While this <a href="https://mail.openvswitch.org/pipermail/ovs-discuss/2015-May/037560.html">this mailing list entry</a>) was
+immensely helpful, it doesn&rsquo;t really get around to explaining what the necessary
+changes <em>mean</em> or give concrete examples for some of the more ambiguous areas.
+The official advice is less helpful still: <a href="http://docs.openvswitch.org/en/latest/faq/contributing/">compile with &ndash;enable-Werror and
+see what breaks</a>.
+Hopefully, this short tutorial will be a helpful supplement!</p>
+<h2 id="preliminaries">Preliminaries</h2>
+<p>On your development machine, follow the <a href="http://docs.openvswitch.org/en/latest/intro/install/general/">official guide</a> on installing
+OVS <em>from source</em>. Any dependencies and build tools needed are all listed,
+and I strongly recommend configuring with <code>--enable-Werror</code>.</p>
+<p>If you&rsquo;re running mininet from the official VM, <a href="https://github.com/mininet/mininet/wiki/Installing-new-version-of-Open-vSwitch">this short guide</a>
+will walk you through uninstalling the default version of OVS and ensuring that
+your new kernel modules will be preferred.</p>
+<h2 id="openflow-protocol-and-action-codes">OpenFlow Protocol and Action Codes</h2>
+<p>First things first, you&rsquo;ll need to introduce your own action code as an
+extension to OpenFlow.</p>
+<p><strong>lib/ofp-actions.c</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">enum</span> ofp_raw_action_type {
+	<span style="color:#75715e">/* ... */</span>
+
+	<span style="color:#75715e">/* NX1.3+(47): struct nx_action_decap, ... */</span>
+	NXAST_RAW_DECAP,
+
+	<span style="color:#75715e">/* OF1.0+(29): uint32_t. */</span>
+	OFPAT_RAW_PROBDROP,
+
+	<span style="color:#75715e">/* ... */</span>
+}
+</code></pre></div><p>Here I&rsquo;ve added in a new action as seen on the wire: <code>OFPAT_RAW_PROBDROP</code>.
+The comment you prepend your new entry with is very important &ndash; some headers
+are autogenerated according to the protocol version, your chosen code, and the
+argument type your action needs. The file explains how to do this in detail.
+For me at least, choosing an integral type was
+a necessary consideration: we <em>will</em> be touching kernel code, and are forced to
+avoid floats.</p>
+<p><strong>include/openvswitch/ofp-actions.h</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define OFPACTS
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">/* ... */</span>
+	OFPACT(GOTO_TABLE,      ofpact_goto_table,  ofpact, <span style="color:#e6db74">&#34;goto_table&#34;</span>) \
+	OFPACT(PROBDROP,        ofpact_probdrop,    ofpact, <span style="color:#e6db74">&#34;probdrop&#34;</span>)
+
+<span style="color:#75715e">/* ..., after &#34;struct ofpact_decap { ... }&#34; */</span>
+
+<span style="color:#75715e">/* OFPACT_PROBDROP.
+</span><span style="color:#75715e"> *
+</span><span style="color:#75715e"> * Used for OFPAT_PROBDROP */</span>
+<span style="color:#66d9ef">struct</span> ofpact_probdrop {
+	OFPACT_PADDED_MEMBERS(
+		<span style="color:#66d9ef">struct</span> ofpact ofpact;
+		<span style="color:#66d9ef">uint32_t</span> prob;           <span style="color:#75715e">/* Uint probability, &#34;covers&#34; 0-&gt;1 range. */</span>
+	);
+	<span style="color:#66d9ef">uint8_t</span> data[];
+};
+</code></pre></div><p>Firstly, through macro magic you&rsquo;re defining <code>OFPACT_PROBDROP</code> to be seen
+elsewhere as a new OFP Action (with a type which is 1 greater than GOTO_TABLE).
+The <code>OFPACT</code> statement also states that your new action will have arguments of
+the form <code>struct ofpact_probdrop</code>, will not be variable-length, and can be
+added at the command line as <code>probdrop:&lt;something&gt;</code>.</p>
+<p>(If you need variable length arguments, the comment at the head of that file is
+helpful.)</p>
+<p>We now need to define codes for that action as it is seen internally by
+<code>ovs-vswitchd</code>, the kernel module, and the various configuation utilities.</p>
+<p><strong>datapath/linux/compat/include/linux/openvswitch.h</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">enum</span> ovs_action_attr {
+	<span style="color:#75715e">/* ... */</span>
+
+	<span style="color:#75715e">/*
+</span><span style="color:#75715e">	* after #ifndef __KERNEL__ ... #endif.
+</span><span style="color:#75715e">	* the equals is thus ABSOLUTELY NECESSARY
+</span><span style="color:#75715e">	*/</span>
+
+	OVS_ACTION_ATTR_PROBDROP <span style="color:#f92672">=</span> <span style="color:#ae81ff">23</span>, <span style="color:#75715e">/* unit32_t, prob in [0,2^32 -1] */</span>
+
+	__OVS_ACTION_ATTR_MAX, <span style="color:#75715e">/* Nothing past this will be accepted
+</span><span style="color:#75715e">							* from userspace. */</span>
+
+	<span style="color:#75715e">/* ... */</span>
+
+}
+</code></pre></div><p>While this is fairly straightforward, placing the new action here is important
+for maintaining compatibility. There&rsquo;s a subtle &ldquo;gotcha&rdquo; here to be aware of, that
+if we don&rsquo;t specify an explicit value for this enum entry then the kernel and
+userland portions of <code>ovs-vswitchd</code> will use different codes for the new action.
+This was, for me at least, an awful debugging experience that I wouldn&rsquo;t wish on
+anyone else.</p>
+<h2 id="action-behaviour">Action Behaviour</h2>
+<p>Most likely, you&rsquo;ll be using OVS with the kernel module. As such, it&rsquo;s your
+first priority to implement your action there.</p>
+<p><strong>datapath/actions.c</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* Ask for a random number.
+</span><span style="color:#75715e">   &#34;p&#34; is the amount we should let through, here true means drop,
+</span><span style="color:#75715e">   false means let it pass on */</span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">prob_drop</span>(<span style="color:#66d9ef">uint32_t</span> prob)
+{
+	<span style="color:#75715e">/* since we can&#39;t use rand() in the kernel */</span>
+	<span style="color:#66d9ef">return</span> prandom_u32() <span style="color:#f92672">&gt;</span> prob;
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">do_execute_actions</span>(<span style="color:#75715e">/* ... */</span>)
+{
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">switch</span> (nla_type(a)) {
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">case</span> OVS_ACTION_ATTR_PROBDROP:
+		<span style="color:#75715e">/* No need to free, taken care of for us
+</span><span style="color:#75715e">		   This function just reads the attribute to
+</span><span style="color:#75715e">		   know if we should drop. */</span>
+		<span style="color:#66d9ef">if</span>(prob_drop(nla_get_u32(a)))
+		{
+			<span style="color:#66d9ef">while</span> (rem) {
+				a <span style="color:#f92672">=</span> nla_next(a, <span style="color:#f92672">&amp;</span>rem);
+			}
+		}
+		<span style="color:#66d9ef">break</span>;
+	}
+	<span style="color:#75715e">/* ... */</span>
+}
+</code></pre></div><p>Adding this new case here is the only thing that needs to be done. Note the
+<code>nla_get_whatever(a)</code> functions in use here; these are used to read any
+arguments passed alongside the action from the netlink socket connecting this
+module with <code>ovs-vswitchd</code>. Compare against the existing implementation to get
+a feel for what functions you should be using to read your argument.</p>
+<p><strong>lib/odp-execute.c</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span>
+<span style="color:#a6e22e">requires_datapath_assistance</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> nlattr <span style="color:#f92672">*</span>a)
+{
+	<span style="color:#66d9ef">enum</span> ovs_action_attr type <span style="color:#f92672">=</span> nl_attr_type(a);
+
+	<span style="color:#66d9ef">switch</span> (type) {
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">case</span> OVS_ACTION_ATTR_PROBDROP:
+		<span style="color:#66d9ef">return</span> false;
+	<span style="color:#75715e">/* ... */</span>
+	}
+}
+</code></pre></div><p>This is fairly context sensitive, though most actions shouldn&rsquo;t need this.</p>
+<h3 id="userland-actions">Userland Actions</h3>
+<p>If you&rsquo;d like to implement your action in the userspace datapath for whatever
+reason, you should add/modify these files. At the very least, you <em>must</em> add in
+an <code>OVS_NOT_REACHED()</code> case.</p>
+<p><strong>lib/packets.h</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* ... */</span>
+
+<span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">prob_drop</span>(<span style="color:#66d9ef">uint32_t</span> prob);
+
+<span style="color:#75715e">#endif </span><span style="color:#75715e">/* packets.h */</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+</code></pre></div><p><strong>lib/packets.c</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* Ask for a random number.
+</span><span style="color:#75715e">   &#34;p&#34; is the amount we should let through, here true means drop,
+</span><span style="color:#75715e">   false means let it pass on */</span>
+<span style="color:#66d9ef">bool</span>
+<span style="color:#a6e22e">prob_drop</span>(<span style="color:#66d9ef">uint32_t</span> prob)
+{
+	<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> roll_i;
+	random_bytes(<span style="color:#f92672">&amp;</span>roll_i, <span style="color:#66d9ef">sizeof</span>(roll_i));
+	<span style="color:#66d9ef">return</span> roll_i <span style="color:#f92672">&gt;</span> prob;
+}
+</code></pre></div><p><strong>lib/dpif-netdev.c</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">dp_execute_cb</span>( <span style="color:#75715e">/* ... */</span> )
+{
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">switch</span> ((<span style="color:#66d9ef">enum</span> ovs_action_attr)type) {
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">case</span> OVS_ACTION_ATTR_PROBDROP:
+		OVS_NOT_REACHED();
+	}
+}
+</code></pre></div><p><strong>lib/dpif.c</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">dpif_execute_helper_cb</span>( <span style="color:#75715e">/* ... */</span> )
+{
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">switch</span> ((<span style="color:#66d9ef">enum</span> ovs_action_attr)type) {
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">case</span> OVS_ACTION_ATTR_PROBDROP:
+		OVS_NOT_REACHED();
+	}
+}
+</code></pre></div><p><strong>ofproto/ofproto-dpif-ipfix.c</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">dpif_sflow_read_actions</span>( <span style="color:#75715e">/* ... */</span> )
+{
+	<span style="color:#66d9ef">switch</span> (type) {
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">case</span> OVS_ACTION_ATTR_PROBDROP:
+		<span style="color:#75715e">/* Ignore sFlow for now, unless needed. */</span>
+		<span style="color:#66d9ef">break</span>;
+	}
+}
+
+<span style="color:#75715e">/* ... */</span>
+
+<span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">dpif_ipfix_read_actions</span>( <span style="color:#75715e">/* ... */</span> )
+{
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">switch</span> (type) {
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">case</span> OVS_ACTION_ATTR_PROBDROP:
+		<span style="color:#75715e">/* Again, ignore for now. Not needed. */</span>
+		<span style="color:#66d9ef">break</span>;
+	}
+}
+</code></pre></div><p><strong>lib/odp-execute.c</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">odp_execute_actions</span>( <span style="color:#75715e">/* ... */</span> )
+{
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">switch</span> ((<span style="color:#66d9ef">enum</span> ovs_action_attr)type) {
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">case</span> OVS_ACTION_ATTR_PROBDROP: {
+		size_t i;
+		<span style="color:#66d9ef">const</span> size_t num <span style="color:#f92672">=</span> dp_packet_batch_size(batch);
+
+		DP_PACKET_BATCH_REFILL_FOR_EACH (i, num, packet, batch) {
+			<span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>prob_drop(nl_attr_get_u32(a))) {
+				dp_packet_batch_refill(batch, packet, i);
+			} <span style="color:#66d9ef">else</span> {
+				dp_packet_delete(packet);
+			}
+		}
+		<span style="color:#66d9ef">break</span>;
+	}
+
+	}
+}
+</code></pre></div><p>I mostly avoided these because they weren&rsquo;t necessary, but these are useful
+starting points.</p>
+<h2 id="action-processing">Action Processing</h2>
+<p>To help <code>ovs-vswitchd</code> handle the new action, we need to modify a fair amount
+of switch statements so that it knows what characteristics the action has, how
+to properly iterate over it, and how to validate any arguments included.
+Part of this includes classifying it such that ovs knows how are action
+interacts with the action set used by <code>WRITE_ACTIONS</code>.
+Thankfully, the function names are mostly self-explanatory here!</p>
+<p><strong>lib/ofp-actions.c</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">struct</span> ofpact <span style="color:#f92672">*</span>
+<span style="color:#a6e22e">ofpact_next_flattened</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> ofpact <span style="color:#f92672">*</span>ofpact)
+{
+	<span style="color:#66d9ef">switch</span> (ofpact<span style="color:#f92672">-&gt;</span>type) {
+		<span style="color:#75715e">/* ... */</span>
+		<span style="color:#66d9ef">case</span> OFPACT_PROBDROP:
+			<span style="color:#66d9ef">return</span> ofpact_next(ofpact);
+	}
+	<span style="color:#75715e">/* ... */</span>
+}
+
+<span style="color:#75715e">/* ... */</span>
+
+<span style="color:#66d9ef">enum</span> ovs_instruction_type
+<span style="color:#a6e22e">ovs_instruction_type_from_ofpact_type</span>(<span style="color:#66d9ef">enum</span> ofpact_type type)
+{
+	<span style="color:#66d9ef">switch</span> (type) {
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">case</span> OFPACT_PROBDROP:
+	<span style="color:#66d9ef">default</span><span style="color:#f92672">:</span>
+		<span style="color:#66d9ef">return</span> OVSINST_OFPIT11_APPLY_ACTIONS;
+	<span style="color:#75715e">/* ... */</span>
+	}
+}
+
+<span style="color:#75715e">/* ... */</span>
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span>
+<span style="color:#a6e22e">ofpact_outputs_to_port</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> ofpact <span style="color:#f92672">*</span>ofpact, ofp_port_t port)
+{
+	<span style="color:#66d9ef">switch</span> (ofpact<span style="color:#f92672">-&gt;</span>type) {
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">case</span> OFPACT_PROBDROP:
+	<span style="color:#66d9ef">default</span><span style="color:#f92672">:</span>
+		<span style="color:#66d9ef">return</span> false;
+	}
+}
+</code></pre></div><p>For how your action does (or does not) execute when placed in an action set,
+pick <em>one</em> of the following:</p>
+<p><strong>lib/ofp-actions.c</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* Choose whether to place the last instance of an action into
+</span><span style="color:#75715e"> * the action set, allow duplicates or disallow it. */</span>
+
+<span style="color:#75715e">/* ONCE */</span>
+<span style="color:#75715e">#define ACTION_SET_ORDER \
+</span><span style="color:#75715e">	SLOT(OFPACT_PROBDROP) \
+</span><span style="color:#75715e">	SLOT(OFPACT_STRIP_VLAN) \
+</span><span style="color:#75715e">	</span><span style="color:#75715e">/* ... */</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">/* OUTPUT-LIKE */</span>
+<span style="color:#75715e">#define ACTION_SET_FINAL_PRIORITY \
+</span><span style="color:#75715e">	SLOT(OFPACT_PROBDROP) \
+</span><span style="color:#75715e">	SLOT(OFPACT_CT) \
+</span><span style="color:#75715e">	</span><span style="color:#75715e">/* ... */</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">enum</span> action_set_class
+<span style="color:#a6e22e">action_set_classify</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> ofpact a<span style="color:#f92672">*</span>)
+{
+	<span style="color:#66d9ef">switch</span> (a<span style="color:#f92672">-&gt;</span>type) {
+	<span style="color:#75715e">/* ... */</span>
+
+	<span style="color:#75715e">/* MULTIPLE */</span>
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">case</span> OFPACT_PROBDROP:
+		<span style="color:#66d9ef">return</span> ACTION_SLOT_OR_SET_MOVE;
+
+	<span style="color:#75715e">/* NEVER */</span>
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">case</span> OFPACT_PROBDROP:
+		<span style="color:#66d9ef">return</span> ACTION_SLOT_INVALID;
+
+	<span style="color:#75715e">/* ... */</span>
+	}
+}
+</code></pre></div><h2 id="command-parsingformattingconversion">Command Parsing/Formatting/Conversion</h2>
+<p>Now, within the same file (<strong>lib/ofp-actions.c</strong>) we must write some new methods
+to help parse and print our action when we query or alter the switch with
+<code>ovs-ofctl</code>. The function names are derived from one of the autogenerated
+headers mentioned earlier, but have this format:</p>
+<p><strong>lib/ofp-actions.c</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* ..., immediately after format_GOTO_TABLE */</span>
+
+<span style="color:#75715e">/* Okay, the new stuff! */</span>
+
+<span style="color:#75715e">/* Encoding the action packet to put on the wire. */</span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">encode_PROBDROP</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> ofpact_probdrop <span style="color:#f92672">*</span>prob,
+					<span style="color:#66d9ef">enum</span> ofp_version ofp_version OVS_UNUSED,
+					<span style="color:#66d9ef">struct</span> ofpbuf <span style="color:#f92672">*</span>out)
+{
+	<span style="color:#66d9ef">uint32_t</span> p <span style="color:#f92672">=</span> prob<span style="color:#f92672">-&gt;</span>prob;
+
+	put_OFPAT_PROBDROP(out, p);
+}
+
+<span style="color:#75715e">/* Reversing the process. */</span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">enum</span> ofperr
+<span style="color:#a6e22e">decode_OFPAT_RAW_PROBDROP</span>(<span style="color:#66d9ef">uint32_t</span> prob,
+							<span style="color:#66d9ef">enum</span> ofp_version ofp_version OVS_UNUSED,
+							<span style="color:#66d9ef">struct</span> ofpbuf <span style="color:#f92672">*</span>out)
+{
+	<span style="color:#66d9ef">struct</span> ofpact_probdrop <span style="color:#f92672">*</span>op;
+	op <span style="color:#f92672">=</span> ofpact_put_PROBDROP(out);
+	op<span style="color:#f92672">-&gt;</span>prob <span style="color:#f92672">=</span> prob;
+
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+
+<span style="color:#75715e">/* Helper for below. */</span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span> OVS_WARN_UNUSED_RESULT
+<span style="color:#a6e22e">parse_prob</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>arg, <span style="color:#66d9ef">struct</span> ofpbuf <span style="color:#f92672">*</span>ofpacts)
+{
+	<span style="color:#66d9ef">struct</span> ofpact_probdrop <span style="color:#f92672">*</span>probdrop;
+	<span style="color:#66d9ef">uint32_t</span> prob;
+	<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>error;
+
+	error <span style="color:#f92672">=</span> str_to_u32(arg, <span style="color:#f92672">&amp;</span>prob);
+	<span style="color:#66d9ef">if</span> (error) <span style="color:#66d9ef">return</span> error;
+
+	probdrop <span style="color:#f92672">=</span> ofpact_put_PROBDROP(ofpacts);
+	probdrop<span style="color:#f92672">-&gt;</span>prob <span style="color:#f92672">=</span> prob;
+	<span style="color:#66d9ef">return</span> NULL;
+}
+
+<span style="color:#75715e">/* Go from string-formatted args into an action struct.
+</span><span style="color:#75715e">e.g. ovs-ofctl add-flow ... actions=probdrop:3000000000,output:&#34;s2-eth0&#34;
+</span><span style="color:#75715e">*/</span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span> OVS_WARN_UNUSED_RESULT
+<span style="color:#a6e22e">parse_PROBDROP</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>arg, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> ofpact_parse_params <span style="color:#f92672">*</span>pp)
+{
+	<span style="color:#66d9ef">return</span> parse_prob(arg, pp<span style="color:#f92672">-&gt;</span>ofpacts);
+}
+
+<span style="color:#75715e">/* Used when printing info to console. */</span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">format_PROBDROP</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> ofpact_probdrop <span style="color:#f92672">*</span>a,
+				<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> ofpact_format_params <span style="color:#f92672">*</span>fp)
+{
+	<span style="color:#75715e">/* Feel free to use e.g. colors.param,
+</span><span style="color:#75715e">	colors.end around parameter names */</span>
+	ds_put_format(fp<span style="color:#f92672">-&gt;</span>s, <span style="color:#e6db74">&#34;probdrop:%&#34;</span>PRIu32, a<span style="color:#f92672">-&gt;</span>prob);
+}
+
+<span style="color:#75715e">/* ... */</span>
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">enum</span> ofperr
+<span style="color:#a6e22e">check_PROBDROP</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> ofpact_probdrop <span style="color:#f92672">*</span>a OVS_UNUSED,
+				<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> ofpact_check_params <span style="color:#f92672">*</span>cp OVS_UNUSED)
+{
+	<span style="color:#75715e">/* My method needs no checking. Probably. */</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>The <code>ofpact_put_PROBDROP</code> and <code>put_OFPAT_PROBDROP</code> are, again, autogenerated.
+If you want more complex handling or multiple parameters, you may consider:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* Simple key-value walker. Useful for complex actions. */</span>
+<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>key;
+<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>value;
+<span style="color:#66d9ef">while</span> (ofputil_parse_key_value(<span style="color:#f92672">&amp;</span>arg, <span style="color:#f92672">&amp;</span>key, <span style="color:#f92672">&amp;</span>value)) {
+	<span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>strcmp(key, <span style="color:#e6db74">&#34;P_send&#34;</span>)) {
+		error <span style="color:#f92672">=</span> str_to_u32(value, <span style="color:#f92672">&amp;</span>prob);
+	} <span style="color:#66d9ef">else</span> {
+		<span style="color:#66d9ef">return</span> xasprintf(<span style="color:#e6db74">&#34;invalid key &#39;%s&#39; in probdrop argument&#34;</span>,
+							key);
+	}
+
+	<span style="color:#66d9ef">if</span> (error) <span style="color:#66d9ef">return</span> error;
+}
+</code></pre></div><p>Finally, some more clerical printing duties! While these are for pretty-printing
+etc., I&rsquo;m not sure where their output applies.</p>
+<p><strong>lib/odp-util.c</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">format_odp_action</span>( <span style="color:#75715e">/* ... */</span> )
+{
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">switch</span> (type) {
+	<span style="color:#75715e">/* ... */</span>
+
+	<span style="color:#66d9ef">case</span> OVS_ACTION_ATTR_PROBDROP: 
+		ds_put_format(ds, <span style="color:#e6db74">&#34;pdrop(%&#34;</span>PRIu32<span style="color:#e6db74">&#34;)&#34;</span>, nl_attr_get_u32(a));
+		<span style="color:#66d9ef">break</span>;
+
+	<span style="color:#75715e">/* ... */</span>
+	}
+}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span>
+<span style="color:#a6e22e">odp_action_len</span>(<span style="color:#66d9ef">uint16_t</span> type)
+{
+	<span style="color:#75715e">/* ... */</span>
+
+	<span style="color:#66d9ef">switch</span> ((<span style="color:#66d9ef">enum</span> ovs_action_attr) type) {
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">case</span> OVS_ACTION_ATTR_PROBDROP: <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">uint32_t</span>);
+	}
+}
+</code></pre></div><h2 id="action-translation----kernel-user-interface">Action Translation &ndash; Kernel-User Interface</h2>
+<p>The final areas that need to be fixed up handle the communication between the
+kernel datapath and the user-level daemon: part of this process is <em>action
+translation</em> (xlate) between the protocol and the physical action.</p>
+<p>For some context, the daemon and the kernel module communicate to one another
+via a <em>Netlink socket</em>. The daemon sends flow actions down to the kernel on
+arrival (for packet handling), and polls for any upcalls from the kernel
+as they arrive. Typically, these occur when a packet arrives which does not
+match any known entries (i.e., the packet must then be sent to the controller,
+or a wildcard rule needs to be concretely instantiated). Using these is fairly
+simple &ndash; if you&rsquo;re unfamiliar, they&rsquo;re host only so we don&rsquo;t need to think
+about byte order.</p>
+<p><strong>ofproto/ofproto-dpif-xlate.c</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* Put this with the other &#34;compose&#34; functions. */</span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">compose_probdrop_action</span>(<span style="color:#66d9ef">struct</span> xlate_ctx <span style="color:#f92672">*</span>ctx, <span style="color:#66d9ef">struct</span> ofpact_probdrop <span style="color:#f92672">*</span>op)
+{
+	<span style="color:#66d9ef">uint32_t</span> prob <span style="color:#f92672">=</span> op<span style="color:#f92672">-&gt;</span>prob;
+
+	nl_msg_put_u32(ctx<span style="color:#f92672">-&gt;</span>odp_actions, OVS_ACTION_ATTR_PROBDROP, prob);
+}
+
+<span style="color:#75715e">/* ... */</span>
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">do_xlate_actions</span>( <span style="color:#75715e">/* ... */</span> )
+{
+	<span style="color:#66d9ef">switch</span> (a<span style="color:#f92672">-&gt;</span>type) {
+	<span style="color:#75715e">/* ... */</span>
+
+	<span style="color:#66d9ef">case</span> OFPACT_PROBDROP:
+		compose_probdrop_action(ctx, ofpact_get_PROBDROP(a));
+		<span style="color:#66d9ef">break</span>;
+	}
+}
+
+<span style="color:#75715e">/* ... */</span>
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span>
+<span style="color:#a6e22e">xlate_fixup_actions</span>()
+{
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">switch</span> ((<span style="color:#66d9ef">enum</span> ovs_action_attr) type) {
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">case</span> OVS_ACTION_ATTR_PROBDROP:
+			ofpbuf_put(b, a, nl_attr_len_pad(a, left));
+	<span style="color:#75715e">/* ... */</span>
+	}
+	<span style="color:#75715e">/* ... */</span>
+}
+
+<span style="color:#75715e">/* ... */</span>
+
+<span style="color:#75715e">/* No action can undo the packet drop: reflect this. */</span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span>
+<span style="color:#a6e22e">reversible_actions</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> ofpact <span style="color:#f92672">*</span>ofpacts, size_t ofpacts_len)
+{
+	<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> ofpact <span style="color:#f92672">*</span>a;
+
+	OFPACT_FOR_EACH (a, ofpacts, ofpacts_len) {
+		<span style="color:#66d9ef">switch</span> (a<span style="color:#f92672">-&gt;</span>type) {
+		<span style="color:#75715e">/*... */</span>
+		<span style="color:#66d9ef">case</span> OFPACT_PROBDROP:
+			<span style="color:#66d9ef">return</span> false;
+		}
+	}
+	<span style="color:#66d9ef">return</span> true;
+}
+
+<span style="color:#75715e">/* ... */</span>
+
+<span style="color:#75715e">/* PROBDROP likely doesn&#39;t require explicit thawing. */</span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">freeze_unroll_actions</span>( <span style="color:#75715e">/* ... */</span> )
+{
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">switch</span> (a<span style="color:#f92672">-&gt;</span>type) {
+		<span style="color:#66d9ef">case</span> OFPACT_PROBDROP:
+			<span style="color:#75715e">/* These may not generate PACKET INs. */</span>
+			<span style="color:#66d9ef">break</span>;
+	}
+}
+
+<span style="color:#75715e">/* ... */</span>
+
+<span style="color:#75715e">/* Naturally, don&#39;t need to recirculate since we don&#39;t change packets. */</span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">recirc_for_mpls</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> ofpact <span style="color:#f92672">*</span>a, <span style="color:#66d9ef">struct</span> xlate_ctx <span style="color:#f92672">*</span>ctx)
+{
+	<span style="color:#75715e">/* ... */</span>
+
+	<span style="color:#66d9ef">switch</span> (a<span style="color:#f92672">-&gt;</span>type) {
+	<span style="color:#66d9ef">case</span> OFPACT_PROBDROP:
+	<span style="color:#66d9ef">default</span><span style="color:#f92672">:</span>
+		<span style="color:#66d9ef">break</span>;
+	}
+}
+</code></pre></div><p>The most important parts of translation are <code>do_xlate_actions</code> and
+<code>compose_probdrop_action</code>, which iterate over an action set and transmit one
+<code>probdrop</code> action respectively. <code>nl_msg_put_u32</code> writes both the action type
+(<code>OVS_ACTION_ATTR_PROBDROP</code>) and the argument value along the socket to be read
+by the datapath module. What you do for the rest of the functions here really
+depends on the semantics of your action, so I suggest you compare against what
+other actions require.</p>
+<p><strong>datapath/flow_netlink.c</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">__ovs_nla_copy_actions</span>( <span style="color:#75715e">/*...*/</span> )
+{
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> u32 action_lens[OVS_ACTION_ATTR_MAX <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> {
+		<span style="color:#75715e">/* ... */</span>
+		[OVS_ACTION_ATTR_PROBDROP] <span style="color:#f92672">=</span> <span style="color:#66d9ef">sizeof</span>(u32),
+	};
+	<span style="color:#75715e">/* ... */</span>
+
+	<span style="color:#75715e">/* Be careful here, your compiler may not catch this one
+</span><span style="color:#75715e">	* even with -Werror */</span>
+	<span style="color:#66d9ef">switch</span> (type) {
+	<span style="color:#75715e">/* ... */</span>
+	<span style="color:#66d9ef">case</span> OVS_ACTION_ATTR_PROBDROP:
+		<span style="color:#75715e">/* Finalest sanity checks in the kernel. */</span>
+		<span style="color:#66d9ef">break</span>;
+	<span style="color:#75715e">/* ... */</span>
+	}
+	<span style="color:#75715e">/* ... */</span>
+}
+</code></pre></div><p>Back to the kernel at last! The final changes we need to make here are simple
+enough; they&rsquo;re essentially last-stop sanity checks on the argument length and
+value. Not much really needs to be said.</p>
+<p>You should be more or less good to go now: just compile, fix and iterate!</p>
+<h2 id="testing">Testing</h2>
+<p>Run mininet, add rules and test as you need:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">sh ovs-ofctl add-flow s1 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>	in_port<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;s1-eth1&#34;</span>,actions<span style="color:#f92672">=</span>probdrop:1000000000,<span style="color:#e6db74">&#34;s2-eth2&#34;</span>
+
+h1 ping h2
+</code></pre></div><p>Alternatively, you can build control messages yourself (to manually send over
+sockets) using a library like <a href="https://github.com/hkwi/twink">twink</a> for
+python:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> twink.ofp5 <span style="color:#66d9ef">as</span> ofp
+<span style="color:#f92672">import</span> twink.ofp5.build <span style="color:#66d9ef">as</span> ofpb
+<span style="color:#f92672">import</span> twink.ofp5.parse <span style="color:#66d9ef">as</span> ofpp
+
+flow_pdrop_msg <span style="color:#f92672">=</span> ofpb<span style="color:#f92672">.</span>ofp_flow_mod(
+	<span style="color:#66d9ef">None</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, ofp<span style="color:#f92672">.</span>OFPFC_ADD,
+	<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#66d9ef">None</span>, <span style="color:#66d9ef">None</span>, <span style="color:#66d9ef">None</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>,
+	ofpb<span style="color:#f92672">.</span>ofp_match(<span style="color:#66d9ef">None</span>, <span style="color:#66d9ef">None</span>, <span style="color:#66d9ef">None</span>),
+	ofpb<span style="color:#f92672">.</span>ofp_instruction_actions(ofp<span style="color:#f92672">.</span>OFPIT_WRITE_ACTIONS, <span style="color:#66d9ef">None</span>, [
+		<span style="color:#75715e"># 29 is the number I picked for Pdrop.</span>
+		<span style="color:#75715e"># 0xffffffff allows all packets through.</span>
+		ofpb<span style="color:#f92672">.</span>_pack(<span style="color:#e6db74">&#34;HHI&#34;</span>, <span style="color:#ae81ff">29</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">0xffffffff</span>),
+		ofpb<span style="color:#f92672">.</span>ofp_action_output(<span style="color:#66d9ef">None</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">65535</span>)
+	])
+)
+</code></pre></div><h2 id="debugging">Debugging</h2>
+<p>All the errors that are being thrown at you by <code>--enable-Werror</code> are first
+priority. It&rsquo;s easy to miss something in a codebase this large.</p>
+<p>For the love of god, befriend <code>gdb</code>. If you think your issues originate in the
+userland code, run <code>ps -e | grep ovs-vswitchd</code> to get the pid, hook in with
+<code>sudo gdb ovs-vswitchd &lt;pid&gt;</code> and have fun.</p>
+<p>Kernel problems are a lot more nefarious, and not something you really want to
+tussle with for too long. If you&rsquo;re not used to this (as I wasn&rsquo;t), you have
+<code>dmesg</code> at your disposal. This will show you any diagnostic messages originating
+from the kernel: feel free to sprinkle your own <code>printk</code> or <code>OVS_NLERR</code>
+statements around. I probably wouldn&rsquo;t advise trying to hook up gdb or anything
+like that. For instance, these tools were what helped me unearth the &ldquo;gotcha&rdquo; I
+mentioned at the start of this guide.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>That wraps up my process for adding, testing and debugging a new action for Open
+vSwitch. Although fairly niche, it was a good experience for me and I hope this
+helps anyone else looking to toy around for research or out of their own
+interest!</p>
+	</div>
+
+	<aside>
+	<section>
+		<div class="social share">
+			<a
+				href="https://mcfelix.me/blog/modifying-ovs/" 
+				onclick="window.open(this.href, '_blank'); return false;"
+				alt="Permalink"
+				title="Permalink"
+			><i class="fas fa-link"></i></a>
+
+			<a
+				href="http://www.facebook.com/sharer.php?src=bm&u=https%3a%2f%2fmcfelix.me%2fblog%2fmodifying-ovs%2f&t=Custom%20Open%20vSwitch%20Actions"
+				onclick="return newSmallWindow(this.href);"
+				alt="Share on Facebook"
+				title="Share on Facebook"
+			><i class="fab fa-facebook"></i></a>
+
+			<a
+				href="http://twitter.com/intent/tweet?url=https%3a%2f%2fmcfelix.me%2fblog%2fmodifying-ovs%2f&text=Custom%20Open%20vSwitch%20Actions&tw_p=tweetbutton"
+				onclick="return newSmallWindow(this.href);"
+				alt="Share on Twitter"
+				title="Share on Twitter"
+			><i class="fab fa-twitter"></i></a>
+
+			<a
+				href="http://getpocket.com/edit?url=https%3a%2f%2fmcfelix.me%2fblog%2fmodifying-ovs%2f&title=Custom%20Open%20vSwitch%20Actions"
+				onclick="return newSmallWindow(this.href);"
+				alt="Save to Pocket"
+				title="Save to Pocket"
+			><i class="fab fa-get-pocket"></i></a>
+		</div>
+	</section>
+</aside>
+
+</article>
+
+				<footer>
+					<p>&copy; 2021 Kyle Simpson</p>
+					<p>Powered by <a href="http://gohugo.io" target="_blank" rel="noreferrer">Hugo</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</body>
+</html>

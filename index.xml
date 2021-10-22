@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kyle Simpson</title>
+    <link>https://mcfelix.me/</link>
+    <description>Recent content on Kyle Simpson</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-GB</language>
+    <lastBuildDate>Mon, 13 Sep 2021 15:30:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://mcfelix.me/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <item>
+      <title>PhD Skills Workshop Session: Adapting Your Project to Work During COVID</title>
+      <link>https://mcfelix.me/talk/sicsa-conf-2021/</link>
+      <category>Talk</category>
+      <pubDate>Mon, 13 Sep 2021 15:30:00 +0000</pubDate>
+      
+      <guid>https://mcfelix.me/talk/sicsa-conf-2021/</guid>
+      <description></description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Revisiting the Classics: Online RL in the Programmable Dataplane</title>
+      <link>https://mcfelix.me/talk/ngn-2021/</link>
+      <category>Talk</category>
+      <pubDate>Fri, 04 Jun 2021 16:00:00 +0000</pubDate>
+      
+      <guid>https://mcfelix.me/talk/ngn-2021/</guid>
+      <description></description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Seiðr: Dataplane Assisted Flow Classification Using ML</title>
+      <link>https://mcfelix.me/talk/seidr-globecom/</link>
+      <category>Talk</category>
+      <pubDate>Thu, 10 Dec 2020 07:00:00 +0000</pubDate>
+      
+      <guid>https://mcfelix.me/talk/seidr-globecom/</guid>
+      <description></description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Towards In-Switch Reinforcement Learning</title>
+      <link>https://mcfelix.me/talk/uksystems-2020/</link>
+      <category>Talk</category>
+      <pubDate>Wed, 02 Dec 2020 14:00:00 +0000</pubDate>
+      
+      <guid>https://mcfelix.me/talk/uksystems-2020/</guid>
+      <description></description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Seiðr: Dataplane Assisted Flow Classification Using ML</title>
+      <link>https://mcfelix.me/publication/seidr/</link>
+      <category>Publication</category>
+      <pubDate>Mon, 17 Aug 2020 11:36:45 +0100</pubDate>
+      
+      <guid>https://mcfelix.me/publication/seidr/</guid>
+      <description></description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Twisted Mac and Cheese</title>
+      <link>https://mcfelix.me/recipe/twisted-mac/</link>
+      <category>Recipe</category>
+      <pubDate>Fri, 17 Jul 2020 12:16:11 +0100</pubDate>
+      
+      <guid>https://mcfelix.me/recipe/twisted-mac/</guid>
+      <description></description>
+    </item>
+    
+    
+    
+    <item>
+      <title>(Almost) Lockless Stream Buffering</title>
+      <link>https://mcfelix.me/blog/shared-buffers/</link>
+      <category>Blog</category>
+      <pubDate>Mon, 27 Apr 2020 00:00:00 +0100</pubDate>
+      
+      <guid>https://mcfelix.me/blog/shared-buffers/</guid>
+      <description>&lt;p&gt;Recently, I&amp;rsquo;ve been working on retooling the audio processing code for &lt;a href=&#34;https://github.com/serenity-rs/serenity&#34;&gt;serenity&lt;/a&gt;, a Discord bot library.
+Adding features like looping, seeking, and shared resources between calls is made difficult when all input data arrives over pipes from &lt;code&gt;ffmpeg&lt;/code&gt; and similar decoders.
+Due to this, I&amp;rsquo;ve designed a thread-safe shared stream buffer intended to lock only on accessing and storing new data.&lt;/p&gt;</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Per-Host DDoS Mitigation by Direct-Control Reinforcement Learning</title>
+      <link>https://mcfelix.me/publication/dc-rl-ddos/</link>
+      <category>Publication</category>
+      <pubDate>Sun, 01 Mar 2020 15:58:29 +0000</pubDate>
+      
+      <guid>https://mcfelix.me/publication/dc-rl-ddos/</guid>
+      <description></description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Real-time Performance Analysis of High-Speed, International Science Network Flows</title>
+      <link>https://mcfelix.me/talk/imc-hightouch/</link>
+      <category>Talk</category>
+      <pubDate>Mon, 21 Oct 2019 03:26:57 +0100</pubDate>
+      
+      <guid>https://mcfelix.me/talk/imc-hightouch/</guid>
+      <description></description>
+    </item>
+    
+    
+    
+    <item>
+      <title>ESnet6 HighTouch Collector: Overview and Future</title>
+      <link>https://mcfelix.me/talk/esnet-collector/</link>
+      <category>Talk</category>
+      <pubDate>Thu, 29 Aug 2019 03:16:28 +0100</pubDate>
+      
+      <guid>https://mcfelix.me/talk/esnet-collector/</guid>
+      <description></description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Thoughts on Vana&#39;diel</title>
+      <link>https://mcfelix.me/blog/on-ffxi/</link>
+      <category>Blog</category>
+      <pubDate>Fri, 31 May 2019 13:29:13 +0100</pubDate>
+      
+      <guid>https://mcfelix.me/blog/on-ffxi/</guid>
+      <description>&lt;p&gt;It&amp;rsquo;s strange, I think, how a sense of nostalgia for a virtual world (or point in time) arises from where we least expect it.
+A visual aesthetic, the feel of a specific piece of music, an outlook on the world and one&amp;rsquo;s place in its community.
+More and more, my thoughts have been drawn by these flashes towards the time I spent in Vana&amp;rsquo;diel&amp;mdash;not a world I thrived in, but one that has nevertheless shaped me.&lt;/p&gt;</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Improving Direct-Control Reinforcement Learning for Network Intrusion Prevention</title>
+      <link>https://mcfelix.me/talk/rln-scone/</link>
+      <category>Talk</category>
+      <pubDate>Mon, 03 Sep 2018 14:45:06 +0100</pubDate>
+      
+      <guid>https://mcfelix.me/talk/rln-scone/</guid>
+      <description></description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Felyne Bot, and Initial Thoughts on Rust</title>
+      <link>https://mcfelix.me/blog/rust-init-thoughts/</link>
+      <category>Blog</category>
+      <pubDate>Tue, 27 Feb 2018 22:41:21 +0000</pubDate>
+      
+      <guid>https://mcfelix.me/blog/rust-init-thoughts/</guid>
+      <description>&lt;p&gt;Having been bereft of a way to annoy my fellow Discord users (and itching to learn a new language), I&amp;rsquo;ve found myself experimenting with &lt;a href=&#34;https://www.rust-lang.org&#34;&gt;Rust&lt;/a&gt;.
+It&amp;rsquo;s been fun and tiring writing &lt;a href=&#34;https://github.com/FelixMcFelix/felyne-bot&#34;&gt;Felyne bot&lt;/a&gt; in a new language, and I&amp;rsquo;ve gotten some more language experience by helping develop &lt;a href=&#34;https://github.com/zeyla/serenity&#34;&gt;Serenity&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Custom Open vSwitch Actions</title>
+      <link>https://mcfelix.me/blog/modifying-ovs/</link>
+      <category>Blog</category>
+      <pubDate>Mon, 04 Dec 2017 15:36:00 +0000</pubDate>
+      
+      <guid>https://mcfelix.me/blog/modifying-ovs/</guid>
+      <description>&lt;p&gt;For a project I&amp;rsquo;ve been working on (reimplementing some &lt;a href=&#34;https://doi.org/10.1016/j.engappai.2015.01.013&#34;&gt;past work&lt;/a&gt;), being able to easily enable
+pushback at various points in the network is fairly important.
+For this, I wanted to try something I&amp;rsquo;d both learn from and be able to use as a
+springboard for later development and testing &amp;ndash; &lt;a href=&#34;http://mininet.org/&#34;&gt;mininet&lt;/a&gt;
+(and by extension, &lt;a href=&#34;http://openvswitch.org&#34;&gt;Open vSwitch&lt;/a&gt;) seemed like a good
+fit. Part of this requires a new feature to be hacked on top of OpenFlow:
+&lt;strong&gt;probabilistic packet dropping&lt;/strong&gt;. I&amp;rsquo;ve written this short
+walkthrough/tutorial on the process for the benefit of anyone looking to make
+their own modifications. A full repository is included &lt;a href=&#34;https://github.com/FelixMcFelix/ovs/tree/ppd&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;[EDIT 2019-03-27]:&lt;/strong&gt; &lt;em&gt;Updated for &lt;a href=&#34;https://github.com/openvswitch/ovs/commit/8e738337a2c25c3d6ede2829d6ffd9af6bcd36a5&#34;&gt;OVS revision 8e73833&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>On Maximum Weight Clique Algorithms, and How They Are Evaluated</title>
+      <link>https://mcfelix.me/publication/eval-mwclq/</link>
+      <category>Publication</category>
+      <pubDate>Fri, 21 Jul 2017 16:39:22 +0100</pubDate>
+      
+      <guid>https://mcfelix.me/publication/eval-mwclq/</guid>
+      <description></description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Graph Models and Maximum Common Subgraph for Character Analysis</title>
+      <link>https://mcfelix.me/project/glyphgraph/</link>
+      <category>Project</category>
+      <pubDate>Fri, 12 May 2017 01:06:04 +0100</pubDate>
+      
+      <guid>https://mcfelix.me/project/glyphgraph/</guid>
+      <description>An investigation into graph models within computer vision&amp;mdash;the project provides a criticism of existing general techniques reliant upon the Delaunay triangulation. I also propose and investigate techniques for modelling and recognition of characters, against several well-known handwritten datasets as well as a sampling of fonts.
+The attached paper constitutes my Masters dissertation.</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Shallot</title>
+      <link>https://mcfelix.me/project/shallot/</link>
+      <category>Project</category>
+      <pubDate>Mon, 28 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://mcfelix.me/project/shallot/</guid>
+      <description>&lt;p&gt;Shallot implements a basic decentralised onion routing scheme designed for use within browser applications, by using a modification of the &lt;em&gt;Chord&lt;/em&gt; protocol as a backbone network and file-storage system.
+This is built upon the experimental &lt;em&gt;WebRTC Data Channels&lt;/em&gt; recently added to browsers to offer true peer-to-peer connectivity between users.
+The system is compatible with both NodeJS and browser-based environments, relying upon one server node as an entry-point.
+Shallot was my Honours project&amp;mdash;the above link directs to the &lt;a href=&#34;https://mcfelix.me/docs/shallot.pdf&#34;&gt;project dissertation&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    
+    
+    
+    <item>
+      <title>Sketch</title>
+      <link>https://mcfelix.me/project/sketch/</link>
+      <category>Project</category>
+      <pubDate>Fri, 20 Mar 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://mcfelix.me/project/sketch/</guid>
+      <description>The end result of a team project, Sketch is a simple Swift-inspired programming language for drawing graphics and animations. Sketch is implemented as a JavaScript library, and is powered by an easy-to-use WebGL backend.
+Unfortunately, no documentation for the language&amp;rsquo;s current version is available&amp;mdash;the implementation differs largely from the original design documents, although most language operations are shown in the test example.</description>
+    </item>
+    
+    
+  </channel>
+</rss>

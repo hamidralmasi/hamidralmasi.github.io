@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		
+		<link rel="shortcut icon" href="https://mcfelix.me/images/fav/favicon.ico" />
+		<link rel="icon" sizes="64x64 32x32 24x24 16x16" href="https://mcfelix.me/images/fav/favicon.ico">
+		<link rel="apple-touch-icon-precomposed" href="https://mcfelix.me/images/fav/favicon-152.png">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="generator" content="Hugo 0.88.1" />
+
+		
+		
+		
+
+		
+		<link rel="preconnect"
+			href="https://fonts.gstatic.com"
+			crossorigin />
+		<link rel="preconnect"
+			href="https://use.fontawesome.com"
+			crossorigin />
+
+		
+		<link rel="preload"
+			as="style"
+			href="https://fonts.googleapis.com/css?family=Alegreya:400,400i,700,700i&display=swap" />
+
+		
+		<link rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Alegreya:400,400i,700,700i&display=swap"
+			media="print" onload="this.media='all'" />
+
+		
+		<noscript>
+			<link rel="stylesheet"
+				href="https://fonts.googleapis.com/css?family=Alegreya:400,400i,700,700i&display=swap" />
+		</noscript>
+
+		
+		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+		
+		<link rel="stylesheet" href="https://mcfelix.me/css/base-min.css" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://mcfelix.me/css/grids-min.css" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://mcfelix.me/css/grids-responsive-min.css" crossorigin="anonymous">
+
+		<style type="text/css">
+			html {
+				line-height: 1.35;
+			}
+
+			html, button, input, select, textarea, .pure-g [class *= "pure-u"] {
+				font-family: "Alegreya", "Lora", Georgia, Times, "Times New Roman", serif;
+			}
+
+			@font-face {
+				font-family: "Georgia";
+				font-display: fallback;
+				src: local(Georgia);
+			}
+		</style>
+
+		
+
+		
+
+		
+
+		<link rel="stylesheet" href="https://mcfelix.me/css/styles.css">
+		<link rel="stylesheet" href="https://mcfelix.me/css/small.css" media="(min-width: 23em)">
+		<link rel="stylesheet" href="https://mcfelix.me/css/medium.css" media="(min-width: 48em)">
+		<link rel="stylesheet" href="https://mcfelix.me/css/large.css" media="(min-width: 64em)">
+		<link rel="stylesheet" href="https://mcfelix.me/css/custom.css">
+
+		
+		<title>Felyne Bot, and Initial Thoughts on Rust - Kyle Simpson</title>
+		<meta property='og:title' content="Felyne Bot, and Initial Thoughts on Rust - Kyle Simpson">
+		<meta property="og:type" content="article">
+		
+
+		<meta property="og:url" content="https://mcfelix.me/blog/rust-init-thoughts/">
+		<meta name="description" content="Portfolio and personal blog site of Kyle A. Simpson.">
+		
+		
+		<meta property="og:image" content="https://mcfelix.me//blog/rust-init-thoughts/images/felynes_hu40b5ae5edd8c4ccfec8d44bc4e47fec3_960473_200x0_resize_q100_box_3.png">
+		
+		<meta name="author" content="Kyle A. Simpson" />
+
+		
+
+
+
+
+
+	
+	
+	
+	
+
+
+<script type="application/ld+json">
+	{
+		"@context": "http://schema.org",
+		"@type": "BlogPosting",
+		"mainEntityOfPage":{
+			"@type":"WebPage",
+			"@id":"https:\/\/mcfelix.me\/"
+		},
+		"headline": "Felyne Bot, and Initial Thoughts on Rust |  ",
+
+		
+		
+		"image": [
+			
+			{
+				"@type": "ImageObject",
+				"url": "https:\/\/mcfelix.me\/blog\/rust-init-thoughts\/images\/felynes.png",
+				"height": 700,
+				"width": 700,
+				"caption": "Some felynes from Monster Hunter Portable 3rd."
+			}
+			
+		]
+		
+
+		"datePublished": "2018-02-27T22:41:21JST",
+		"dateModified": "2018-02-27T22:41:21JST",
+		"author": {
+			"@type": "Person",
+			"name": "Kyle A. Simpson",
+			"image": "https:\/\/mcfelix.me\/images/profile.jpg"
+		},
+		"publisher": {
+			"@type": "Organization",
+			"name": "",
+			"logo": {
+				"@type": "ImageObject",
+				"url": "https:\/\/mcfelix.me\/images/logo.png",
+				"height": 60,
+				"width": 60
+			}
+		},
+		"description": "A language I want to love."
+	}
+</script>
+
+<script type="text/javascript">
+	function newSmallWindow(url) {
+		window.open(url, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes');
+		return false;
+	}
+</script>
+
+<link rel="bookmark" href="https://mcfelix.me/blog/rust-init-thoughts/" />
+
+</head>
+<body class="pure-g">
+
+<nav class="navbar pure-u-1 pure-u-md-1-4">
+	<div class="navbar-header">
+		<a href="https://mcfelix.me/">Kyle Simpson</a>
+	</div>
+
+	<div class="navbar-split"></div>
+
+	
+	<div class="navbar-body">
+		<div class="navbar-body-buffer pure-g">
+		
+			
+			<div class="pure-u-1-3 pure-u-md-1"><a href="https://mcfelix.me/blog/" >blog</a></div>
+			
+			<div class="pure-u-1-3 pure-u-md-1"><a href="https://mcfelix.me/project/" >projects</a></div>
+			
+			<div class="pure-u-1-3 pure-u-md-1"><a href="https://mcfelix.me/kyle-simpson.pdf" target="_blank">résumé</a></div>
+			
+			<div class="pure-u-1-3 pure-u-md-1"><a href="https://mcfelix.me/publication/" >publications</a></div>
+			
+		
+		</div>
+	</div>
+
+	<div class="navbar-split"></div>
+
+	<section class="social">
+	
+
+	
+	<a href="http://github.com/FelixMcFelix" alt="GitHub" title="GitHub"><i class="fab fa-github"></i></a>
+	
+
+	
+	<a href="mailto:kyleandrew.simpson@gmail.com" alt="Email" title="Email"><i class="fas fa-envelope"></i></a>
+	
+
+	
+	<a href="http://twitter.com/McFelixFelix" alt="Twitter" title="Twitter"><i class="fab fa-twitter"></i></a>
+	
+
+	
+	<a href="http://linkedin.com/in/kyle-simpson-b0944bb0" alt="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+	
+
+	
+
+	
+	<a href="https://keybase.io/felixmcfelix" alt="Keybase" title="Keybase"><i class="fas fa-key"></i></a>
+	
+</section>
+
+</nav>
+<div class="content pure-u-1 pure-u-md-3-4">
+	<div>
+
+<article class="single">
+	<a href="/blog/rust-init-thoughts/images/felynes.png" ><img class="pure-img" style="width: 100%" src="/blog/rust-init-thoughts/images/felynes_hu40b5ae5edd8c4ccfec8d44bc4e47fec3_960473_600x0_resize_q100_box_3.png" alt="Some felynes from Monster Hunter Portable 3rd."></img></a>
+
+	<div class="body">
+		<h1>Felyne Bot, and Initial Thoughts on Rust</h1>
+		<h4 class="desc">A language I want to love.</h4>
+		<h3 class="date">
+	<time datetime="2018-02-27T22:41:21JST">
+		Tue, Feb 27, 2018
+	</time>
+</h3>
+		
+<aside class="reading-time">
+	<i>Reading time: ~7 minutes.</i>
+</aside>
+
+		
+<aside class="tag-holder">
+	<i>Tags:
+	
+		<a class="tag" href="https://mcfelix.me/tags/rust/">Rust</a>
+	
+		<a class="tag" href="https://mcfelix.me/tags/discord/">Discord</a>
+	
+		<a class="tag" href="https://mcfelix.me/tags/monster-hunter/">Monster Hunter</a>
+	
+		<a class="tag" href="https://mcfelix.me/tags/bots/">Bots</a>
+	
+	</i>
+</aside>
+
+		<aside class="category-holder">
+	
+		<div class="categorywrap"><a class="category" href="https://mcfelix.me/categories/development/">Development</a></div>
+	
+		<div class="categorywrap"><a class="category" href="https://mcfelix.me/categories/programming-languages/">Programming Languages</a></div>
+	
+		<div class="categorywrap"><a class="category" href="https://mcfelix.me/categories/gaming/">Gaming</a></div>
+	
+</aside>
+		<div class="post-split"></div>
+		<p>Having been bereft of a way to annoy my fellow Discord users (and itching to learn a new language), I&rsquo;ve found myself experimenting with <a href="https://www.rust-lang.org">Rust</a>.
+It&rsquo;s been fun and tiring writing <a href="https://github.com/FelixMcFelix/felyne-bot">Felyne bot</a> in a new language, and I&rsquo;ve gotten some more language experience by helping develop <a href="https://github.com/zeyla/serenity">Serenity</a>.</p>
+<h2 id="introduction">Introduction</h2>
+<p>While intended as a <em>safe systems programming language</em>, much of the focus from the community&rsquo;s marketing has been on its ergonomics and ease-of-use while inhabiting very much the same sphere as C.
+It caught my interest; I&rsquo;d been meaning to study and apply the language after learning about region-based memory management this time last year.</p>
+<p>On another note, my friends on <a href="https://discord.gg">Discord</a> (and the groups we tend to frequent) enjoy playing the old Monster Hunter games online.
+<em>Felyne</em> teammates are a key part of the series, a race of friendly fighting cats who excel at two things: distracting the monsters who obviously want to eat you, and making a hell of a lot of noise.
+Not just any noise, mind you.
+It&rsquo;s a wonderful, mildly bitcrushed, repetitive, grating, <strong>awfully</strong> loud, and yet strangely comfy experience that only PS2/PSP-era games offer.</p>
+<p>So, I wanted to bring their charm, and the charm of the Monster Hunter world to the unenlightened!
+I had a language and a project picked out.</p>
+<p>To cook up a voice bot I found a pretty decent looking library, <a href="https://github.com/zeyla/serenity">Serenity</a>, which I&rsquo;ve been contributing and adding to.
+It&rsquo;s currently the most-developed library in the Rust community for Discord bots I&rsquo;ve come across, although the voice functionality needed a little love to be where I needed it to be.
+I don&rsquo;t often get to work with audio code at the sample level, so working on these aspects of the library in parallel with <a href="https://github.com/FelixMcFelix/felyne-bot">Felyne bot</a> was worth it.</p>
+<h2 id="the-language">The Language</h2>
+<p>I feel I should start with the good parts of the language (although, I must disclose I haven&rsquo;t tried to toy with macros).</p>
+<hr>
+<p>Bringing the program model back down to <em>structs</em> and <em>Traits</em> (like C, except with the kind of generic type reasoning we all love) is very close to the level of abstraction I like to work with.
+It&rsquo;s a move away from a certain Object-Oriented dogma that&rsquo;s been floating around for a long time now, but keeping the higher-kinded reasoning (and quality of life) that exists in most languages today.
+It&rsquo;s very much in-line with the whole &lsquo;zero-cost abstraction&rsquo; philosophy the devs are going for, and I think it&rsquo;s more than enough to encode fairly rich relationships.</p>
+<p>Coming from what I&rsquo;ve seen in C, C++, Java and the like, Rust&rsquo;s compiler error messages are a god-send.
+Not that I like having my work picked apart, but the clarity and pointedness of the messages themselves is so far above and beyond what other compiled languages really have to offer.
+Too often are the days when a relatively simple error in C++ (for instance) leads to pages upon pages of useless information spewing forth from some template code violation.
+It&rsquo;s <em>not</em> something I want to be spending the time to unpack, and Rust&rsquo;s compiler generally knows how to help you along the path to a working program &ndash; the borrow checker is notoriously harsh, after all!</p>
+<p>What I like most, however, are the advances in syntax simplicity and expressiveness over C and C++, which I imagine are its main competitors.
+It&rsquo;s freeing to have a language that operates at this level yet distinctly <em>feels</em> like a modern language, without carrying around the decaying legacy of prior versions, C++-style.
+Enumerations are great, lambdas are great, tuple returns, channels, intelligent destructuring: all great.
+Even if it is missing <a href="https://eli.thegreenplace.net/2011/02/15/array-initialization-with-enum-indices-in-c-but-not-c">one of my favourite features from C</a>.</p>
+<hr>
+<p>One of the largest gripes I have is symptomatic of how many people may well have approached the language (i.e., as a curio): the selection of open source libraries and sys-wrappers is very much in its infancy.
+With core dependencies of useful libraries lying untouched, mysteriously broken and littered with <code>TODO</code> comments, it really shows.
+This &lsquo;curio&rsquo; angle resurfaces when it comes to how forward-thinking wrapper writers might not be, such as <code>Decoder</code> state <code>struct</code>s for <a href="https://github.com/SpaceManiac/opus-rs">Opus</a> mysteriously lacking the <code>Send</code> Trait despite being, well&hellip; <code>struct</code>s.</p>
+<p>I guess this ties into a &lsquo;momentum problem&rsquo; of sorts: I, as a new contributor to a library, can&rsquo;t and don&rsquo;t want to fork and fix an abandoned dependency, push it as a new project to Cargo and then rally for a migration over to that.
+It ends up being easier to bang out code like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#75715e">// Since each audio item needs its own decoder, we need to
+</span><span style="color:#75715e">// work around the fact that OpusDecoders aint sendable.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">SendDecoder</span>(OpusDecoder);
+
+<span style="color:#66d9ef">impl</span> SendDecoder {
+	<span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">decode_float</span>(...) -&gt; <span style="color:#a6e22e">OpusResult</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">usize</span><span style="color:#f92672">&gt;</span> {
+		<span style="color:#66d9ef">let</span> <span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> SendDecoder(<span style="color:#66d9ef">ref</span> <span style="color:#66d9ef">mut</span> sd) <span style="color:#f92672">=</span> self;
+		sd.decode_float(input, output, fec)
+	}
+}
+
+<span style="color:#66d9ef">unsafe</span> <span style="color:#66d9ef">impl</span> Send <span style="color:#66d9ef">for</span> SendDecoder {}
+</code></pre></div><p>And this is a problem, I guess, that might well be present in all communities but that the young ecosystem really exacerbates.
+It&rsquo;s easier to drop fragile fixes into downstream libraries (which are likely being independently implemented over and over) than it is to fix the libraries themselves.</p>
+<p>Another of the language&rsquo;s sore points (that I hope should be resolved in time) is the compiler&rsquo;s performance.
+Even with incremental compilation, <code>rustc</code> falls so far behind modern C++ compilers that the build process for a project relying on a medium-size library can take dauntingly long.
+The suggestion to get around this is <code>cargo check</code>, which is useful almost all the time and during a project&rsquo;s infancy.
+Yet it <em>isn&rsquo;t</em> helpful when you know your syntax or types are correct, and that the problems you&rsquo;re having are purely behavioural.
+I&rsquo;m willing to bet this is the case for most use cases applying data-dependent logic, such as audio processing or game logic.</p>
+<p>One of the downsides of the borrow checker (and the ordinarily helpful compiler messages) is that certain access patterns that I imagine are common lead to downright unhelpful error messages.
+Suppose you have an <code>Option&lt;...&gt;</code> field on a <code>struct</code>, and you&rsquo;re aware that it must have a valid value due to another invariant:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Entity</span> {
+	id: <span style="color:#66d9ef">i64</span>,
+	pos: Option<span style="color:#f92672">&lt;</span>Position<span style="color:#f92672">&gt;</span>,
+	seen: <span style="color:#66d9ef">bool</span>,
+}
+
+<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> t <span style="color:#f92672">=</span> Entity {<span style="color:#ae81ff">1</span>, Some(...)};
+process(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> t);
+
+<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">process</span>(t: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">mut</span> Entity) {
+	<span style="color:#75715e">// suppose (id &lt; 0) &lt;=&gt; pooled (but unalloc&#39;d Entity)
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> t.id <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> {
+		t.pos.expect(<span style="color:#e6db74">&#34;It&#39;s a valid entity.&#34;</span>).move_by(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>);
+		<span style="color:#75715e">// ^^^^^ error: cannot move out of borrowed content
+</span><span style="color:#75715e"></span>
+		t.seen <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
+	}
+}
+</code></pre></div><p><em>Naturally</em>, the correct course of action is to take <code>t.as_mut()</code> first, because the commonly used and advertised <code>expect</code> and <code>unwrap</code> methods <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.expect"><em>will</em> consume ownership</a>.
+This isn&rsquo;t made explicit when you&rsquo;re taught about these functions.
+It only really becomes apparent when you&rsquo;re trying to contain a type which isn&rsquo;t trivially copiable.
+But the error message is indistinguishable from any other ownership violation, and that makes it so much harder to understand <em>why</em> your problem is solved this way (and not, say, with wanton use of <code>clone</code>).</p>
+<h2 id="the-bot">The Bot</h2>
+<p>The <a href="https://github.com/FelixMcFelix/felyne-bot">bot itself</a> is very much beloved in the server I designed it for &ndash; it chiefly joins the busiest voice channel in any servers it&rsquo;s a member of, playing ambient noises, music, a constant stream of felyne noises and includes some bonus events.
+It&rsquo;s a great source of white noise, and it embodies our server&rsquo;s goofiness, in a way.</p>
+<p>As development went on, I realised that I&rsquo;d have been far better off modelling it as a <em>probabilistic finite automaton</em>, but given that most of what I&rsquo;ve hacked together gets the job done I&rsquo;m loath to change it unless inspiration strikes once more.
+It&rsquo;d be an interesting afternoon project, if I get bored.</p>
+<p>Apart from that, it&rsquo;s responsible for reporting message deletions in a pre-designated channel, for adminstration purposes.
+All I really have to do is cache as many messages as I can on a per-guild basis &ndash; in my case, I implemented a simple ring buffer so I wouldn&rsquo;t have to worry about <code>Vector</code> modification or reallocation.</p>
+<h2 id="final-thoughts">Final Thoughts</h2>
+<p>To put it simply, Rust is a language I&rsquo;d love to learn more of and experiment with further, but I think it pushes a lot of burden onto the programmer in terms of both learning time <em>and</em> coding time.
+The time penalty is definitely a harsh price to pay at first, though I&rsquo;m left to imagine that it grows that much easier over time.</p>
+<p>I&rsquo;m torn: when it&rsquo;s at its best, the language really helps you and is genuinely quite enjoyable to work with; at its worst, it&rsquo;s like a never-ending cage match with the compiler.
+Whether the difficulty it offsets the cost of hunting down the type of bugs that Rust aims to eliminate is very much an open question, but I&rsquo;d like to play around with it further.</p>
+	</div>
+
+	<aside>
+	<section>
+		<div class="social share">
+			<a
+				href="https://mcfelix.me/blog/rust-init-thoughts/" 
+				onclick="window.open(this.href, '_blank'); return false;"
+				alt="Permalink"
+				title="Permalink"
+			><i class="fas fa-link"></i></a>
+
+			<a
+				href="http://www.facebook.com/sharer.php?src=bm&u=https%3a%2f%2fmcfelix.me%2fblog%2frust-init-thoughts%2f&t=Felyne%20Bot%2c%20and%20Initial%20Thoughts%20on%20Rust"
+				onclick="return newSmallWindow(this.href);"
+				alt="Share on Facebook"
+				title="Share on Facebook"
+			><i class="fab fa-facebook"></i></a>
+
+			<a
+				href="http://twitter.com/intent/tweet?url=https%3a%2f%2fmcfelix.me%2fblog%2frust-init-thoughts%2f&text=Felyne%20Bot%2c%20and%20Initial%20Thoughts%20on%20Rust&tw_p=tweetbutton"
+				onclick="return newSmallWindow(this.href);"
+				alt="Share on Twitter"
+				title="Share on Twitter"
+			><i class="fab fa-twitter"></i></a>
+
+			<a
+				href="http://getpocket.com/edit?url=https%3a%2f%2fmcfelix.me%2fblog%2frust-init-thoughts%2f&title=Felyne%20Bot%2c%20and%20Initial%20Thoughts%20on%20Rust"
+				onclick="return newSmallWindow(this.href);"
+				alt="Save to Pocket"
+				title="Save to Pocket"
+			><i class="fab fa-get-pocket"></i></a>
+		</div>
+	</section>
+</aside>
+
+</article>
+
+				<footer>
+					<p>&copy; 2021 Kyle Simpson</p>
+					<p>Powered by <a href="http://gohugo.io" target="_blank" rel="noreferrer">Hugo</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</body>
+</html>

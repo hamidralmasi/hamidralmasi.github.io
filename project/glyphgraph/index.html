@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		
+		<link rel="shortcut icon" href="https://mcfelix.me/images/fav/favicon.ico" />
+		<link rel="icon" sizes="64x64 32x32 24x24 16x16" href="https://mcfelix.me/images/fav/favicon.ico">
+		<link rel="apple-touch-icon-precomposed" href="https://mcfelix.me/images/fav/favicon-152.png">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="generator" content="Hugo 0.88.1" />
+
+		
+		
+		
+
+		
+		<link rel="preconnect"
+			href="https://fonts.gstatic.com"
+			crossorigin />
+		<link rel="preconnect"
+			href="https://use.fontawesome.com"
+			crossorigin />
+
+		
+		<link rel="preload"
+			as="style"
+			href="https://fonts.googleapis.com/css?family=Alegreya:400,400i,700,700i&display=swap" />
+
+		
+		<link rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Alegreya:400,400i,700,700i&display=swap"
+			media="print" onload="this.media='all'" />
+
+		
+		<noscript>
+			<link rel="stylesheet"
+				href="https://fonts.googleapis.com/css?family=Alegreya:400,400i,700,700i&display=swap" />
+		</noscript>
+
+		
+		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+		
+		<link rel="stylesheet" href="https://mcfelix.me/css/base-min.css" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://mcfelix.me/css/grids-min.css" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://mcfelix.me/css/grids-responsive-min.css" crossorigin="anonymous">
+
+		<style type="text/css">
+			html {
+				line-height: 1.35;
+			}
+
+			html, button, input, select, textarea, .pure-g [class *= "pure-u"] {
+				font-family: "Alegreya", "Lora", Georgia, Times, "Times New Roman", serif;
+			}
+
+			@font-face {
+				font-family: "Georgia";
+				font-display: fallback;
+				src: local(Georgia);
+			}
+		</style>
+
+		
+
+		
+
+		
+
+		<link rel="stylesheet" href="https://mcfelix.me/css/styles.css">
+		<link rel="stylesheet" href="https://mcfelix.me/css/small.css" media="(min-width: 23em)">
+		<link rel="stylesheet" href="https://mcfelix.me/css/medium.css" media="(min-width: 48em)">
+		<link rel="stylesheet" href="https://mcfelix.me/css/large.css" media="(min-width: 64em)">
+		<link rel="stylesheet" href="https://mcfelix.me/css/custom.css">
+
+		
+		<title>Graph Models and Maximum Common Subgraph for Character Analysis - Kyle Simpson</title>
+		<meta property='og:title' content="Graph Models and Maximum Common Subgraph for Character Analysis - Kyle Simpson">
+		<meta property="og:type" content="article">
+		
+
+		<meta property="og:url" content="https://mcfelix.me/project/glyphgraph/">
+		<meta name="description" content="Portfolio and personal blog site of Kyle A. Simpson.">
+		
+		<meta name="author" content="Kyle A. Simpson" />
+
+		
+
+<script type="application/ld+json">
+	{
+		"@context": "http://schema.org",
+		"@type": "BlogPosting",
+		"mainEntityOfPage":{
+			"@type":"WebPage",
+			"@id":"https:\/\/mcfelix.me\/"
+		},
+		"headline": "Graph Models and Maximum Common Subgraph for Character Analysis |  ",
+		"image": {
+			"@type": "ImageObject",
+			"url": "",
+			"height": 700,
+			"width": 700
+		},
+		"datePublished": "2017-05-12T01:06:04JST",
+		"dateModified": "2017-05-12T01:06:04JST",
+		"author": {
+			"@type": "Person",
+			"name": "Kyle A. Simpson",
+			"image": "https:\/\/mcfelix.me\/images/profile.jpg"
+		},
+		"publisher": {
+			"@type": "Organization",
+			"name": "",
+			"logo": {
+				"@type": "ImageObject",
+				"url": "https:\/\/mcfelix.me\/images/logo.png",
+				"height": 60,
+				"width": 60
+			}
+		},
+		"description": "A criticism of current image-to-graph transformations, and an investigation within simple domains."
+	}
+</script>
+
+<script type="text/javascript">
+	function newSmallWindow(url) {
+		window.open(url, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes');
+		return false;
+	}
+</script>
+
+<link rel="bookmark" href="https://mcfelix.me/project/glyphgraph/" />
+
+</head>
+<body class="pure-g">
+
+<nav class="navbar pure-u-1 pure-u-md-1-4">
+	<div class="navbar-header">
+		<a href="https://mcfelix.me/">Kyle Simpson</a>
+	</div>
+
+	<div class="navbar-split"></div>
+
+	
+	<div class="navbar-body">
+		<div class="navbar-body-buffer pure-g">
+		
+			
+			<div class="pure-u-1-3 pure-u-md-1"><a href="https://mcfelix.me/blog/" >blog</a></div>
+			
+			<div class="pure-u-1-3 pure-u-md-1"><a href="https://mcfelix.me/project/" >projects</a></div>
+			
+			<div class="pure-u-1-3 pure-u-md-1"><a href="https://mcfelix.me/kyle-simpson.pdf" target="_blank">résumé</a></div>
+			
+			<div class="pure-u-1-3 pure-u-md-1"><a href="https://mcfelix.me/publication/" >publications</a></div>
+			
+		
+		</div>
+	</div>
+
+	<div class="navbar-split"></div>
+
+	<section class="social">
+	
+
+	
+	<a href="http://github.com/FelixMcFelix" alt="GitHub" title="GitHub"><i class="fab fa-github"></i></a>
+	
+
+	
+	<a href="mailto:kyleandrew.simpson@gmail.com" alt="Email" title="Email"><i class="fas fa-envelope"></i></a>
+	
+
+	
+	<a href="http://twitter.com/McFelixFelix" alt="Twitter" title="Twitter"><i class="fab fa-twitter"></i></a>
+	
+
+	
+	<a href="http://linkedin.com/in/kyle-simpson-b0944bb0" alt="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+	
+
+	
+
+	
+	<a href="https://keybase.io/felixmcfelix" alt="Keybase" title="Keybase"><i class="fas fa-key"></i></a>
+	
+</section>
+
+</nav>
+<div class="content pure-u-1 pure-u-md-3-4">
+	<div>
+
+<article class="single">
+	<img class="pure-img" src="https://mcfelix.me/images/projects/sip-for-cv.png"></img>
+
+	<div class="body">
+		<h1>Graph Models and Maximum Common Subgraph for Character Analysis</h1>
+		<h4 class="desc">A criticism of current image-to-graph transformations, and an investigation within simple domains.</h4>
+		<h3 class="date">
+	<time datetime="2017-05-12T01:06:04JST">
+		May 2017
+	</time>
+</h3>
+		
+<aside class="tag-holder">
+	<i>Tags:
+	
+		<a class="tag" href="https://mcfelix.me/tags/python/">Python</a>
+	
+		<a class="tag" href="https://mcfelix.me/tags/c&#43;&#43;/">C&#43;&#43;</a>
+	
+	</i>
+</aside>
+
+		<aside class="category-holder">
+	
+		<div class="categorywrap"><a class="category" href="https://mcfelix.me/categories/university/">University</a></div>
+	
+		<div class="categorywrap"><a class="category" href="https://mcfelix.me/categories/graphs/">Graphs</a></div>
+	
+		<div class="categorywrap"><a class="category" href="https://mcfelix.me/categories/algorithms/">Algorithms</a></div>
+	
+</aside>
+		<h3 class="links">
+	
+	<a href="https://github.com/FelixMcFelix/sip-for-cv-paper" alt="Project GitHub" title="Project GitHub"><i class="fab fa-github"></i></a>
+	
+	
+	
+	<a href="/docs/sip-for-cv.pdf" alt="Project report/dissertation" title="Project report/dissertation"><i class="fas fa-book"></i></a>
+	
+</h3>
+		<div class="post-split"></div>
+		<p>An investigation into graph models within computer vision&mdash;the project provides a criticism of existing general techniques reliant upon the <em>Delaunay triangulation</em>.
+I also propose and investigate techniques for modelling and recognition of characters, against several well-known handwritten datasets as well as a sampling of fonts.</p>
+<p>The attached <a href="/docs/sip-for-cv.pdf">paper</a> constitutes my Masters dissertation.</p>
+
+	</div>
+
+	<aside>
+	<section>
+		<div class="social share">
+			<a
+				href="https://mcfelix.me/project/glyphgraph/" 
+				onclick="window.open(this.href, '_blank'); return false;"
+				alt="Permalink"
+				title="Permalink"
+			><i class="fas fa-link"></i></a>
+
+			<a
+				href="http://www.facebook.com/sharer.php?src=bm&u=https%3a%2f%2fmcfelix.me%2fproject%2fglyphgraph%2f&t=Graph%20Models%20and%20Maximum%20Common%20Subgraph%20for%20Character%20Analysis"
+				onclick="return newSmallWindow(this.href);"
+				alt="Share on Facebook"
+				title="Share on Facebook"
+			><i class="fab fa-facebook"></i></a>
+
+			<a
+				href="http://twitter.com/intent/tweet?url=https%3a%2f%2fmcfelix.me%2fproject%2fglyphgraph%2f&text=Graph%20Models%20and%20Maximum%20Common%20Subgraph%20for%20Character%20Analysis&tw_p=tweetbutton"
+				onclick="return newSmallWindow(this.href);"
+				alt="Share on Twitter"
+				title="Share on Twitter"
+			><i class="fab fa-twitter"></i></a>
+
+			<a
+				href="http://getpocket.com/edit?url=https%3a%2f%2fmcfelix.me%2fproject%2fglyphgraph%2f&title=Graph%20Models%20and%20Maximum%20Common%20Subgraph%20for%20Character%20Analysis"
+				onclick="return newSmallWindow(this.href);"
+				alt="Save to Pocket"
+				title="Save to Pocket"
+			><i class="fab fa-get-pocket"></i></a>
+		</div>
+	</section>
+</aside>
+
+</article>
+
+				<footer>
+					<p>&copy; 2021 Kyle Simpson</p>
+					<p>Powered by <a href="http://gohugo.io" target="_blank" rel="noreferrer">Hugo</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</body>
+</html>
