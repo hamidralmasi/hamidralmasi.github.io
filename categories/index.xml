@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on Hamidreza Almasi</title>
+    <title>Categories on Personal Website of Hamidreza Almasi</title>
     <link>https://hamidralmasi.github.io/categories/</link>
-    <description>Recent content in Categories on Hamidreza Almasi</description>
+    <description>Recent content in Categories on Personal Website of Hamidreza Almasi</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-GB</language><atom:link href="https://hamidralmasi.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="https://hamidralmasi.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
