@@ -79,11 +79,11 @@ h2 code {
 }
 
 .about .affiliations #title {
-    padding-right: .5%;
+    /* padding-right: .25%; */
 }
 
 .about .affiliations #name {
-    padding-right: .5%;
+    /* padding-right: .25%; */
 }   
 
 .about #email {
